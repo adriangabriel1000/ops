@@ -3,4 +3,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
-    return HttpResponse('Hello')
+    quals = "abcd"
+    return render(request, 'home/index.html', {
+        'quals': quals,
+    })
