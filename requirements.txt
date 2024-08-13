@@ -1,5 +1,0 @@
-Django
-pillow
-django-crispy-forms
-crispy-bootstrap5
-djangorestframework

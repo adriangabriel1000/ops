@@ -1,0 +1,8 @@
+.btn-info, .btn-info:hover, .btn-info:active, .btn-info:visited {
+    background-color: #6563f6 !important;
+    color:white !important;
+}
+
+h5 {
+    color: #6563f6; 
+}

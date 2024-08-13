@@ -1,0 +1,7 @@
+{% extends 'home/base.html' %}
+
+{% block body %}
+    {% for profile in profiles %}
+        {{ profile.user.username }} {{ profile.designation }} {{ profile.user.first_name}} {{ profile.user.last_name }}
+    {% endfor %}
+{% endblock %}
