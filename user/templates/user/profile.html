@@ -6,7 +6,7 @@
         {{ profile.user.username }} {{ profile.designation }} {{ profile.user.first_name}} {{ profile.user.last_name }}
         <img src="{{ profile.image.url }}" width="32" height="32">
     {% endfor %}
-
+    {{user}}
 
     <form method="POST">
         {% csrf_token %}

@@ -22,9 +22,10 @@ def register(request):
 
 @login_required
 def profile(request):
-    
-    form = ProfileForm()
-    #profiles = Profile.objects.all()
+    user = request.user
+    form = ProfileForm(instance=request.user.profile, data=request.POST)
+
     return render(request, 'user/profile.html', {
         'form': form,
+        'user': user,
     })
