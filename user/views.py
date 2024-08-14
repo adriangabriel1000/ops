@@ -24,8 +24,9 @@ def register(request):
 def profile(request):
     user = request.user
     form = ProfileForm(instance=request.user.profile, data=request.POST)
+    profiles = Profile.objects.get(user=user)
 
     return render(request, 'user/profile.html', {
         'form': form,
-        'user': user,
+        'profiles': profiles,
     })

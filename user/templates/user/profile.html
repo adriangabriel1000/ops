@@ -2,15 +2,116 @@
 {% load static %}
 
 {% block body %}
-    {% for profile in profiles %}
-        {{ profile.user.username }} {{ profile.designation }} {{ profile.user.first_name}} {{ profile.user.last_name }}
-        <img src="{{ profile.image.url }}" width="32" height="32">
-    {% endfor %}
-    {{user}}
-
-    <form method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Register</button>
-    </form>    
+    <div class="container text-center py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-6">
+                <div class="card shadow-lg p-3 bg-body-tertiary rounded" style="border-radius: 1rem;">
+                    <div class="card-body text-center">
+                        <h4 class="fw-bold m-5">CHANGE PROFILE FOR USER: {{profiles.user}}</h4> 
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div data-mdb-input-init class="form-outline form-white"></div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_initials">Initials</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="initials" id="id_initials" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.initials}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_unique">Unique Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="unique" id="id_unique" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.unique}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_address">Address</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="address" id="id_address" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.address}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_idnum">ID Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="idnum" id="id_idnum" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.idnum}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_cell">Cell Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="cell" id="id_cell" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.cell}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_homenum">Home Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="homenum" id="id_homenum" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.homenum}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_dob">Date of Birth</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="dob" id="id_dob" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.dob}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_designation">Designation</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="designation" id="id_designation" class="form-control" />
+                                        <p class="text-start">The current value is set to: {{profiles.designation}}</p>
+                                    </div>
+                                </div>
+                                <div class="row border shadow-sm p-2">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_image">Profile Pic</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="file" name="image" accept="image/*" id="id_image" class="form-control" />
+                                        <p class="text-start">Currently: {{profiles.image}}</p>
+                                        <div class="row d-flex flex-row align-items-center">
+                                            <div class="col-2">
+                                            <!--<div class="text-start">-->
+                                                <img class="float-start" src="/pictures/{{profiles.image}}" width="60" height="60">
+                                            </div>
+                                            <div class="col-10 d-flex justify-content-start">
+                                                <input class="form-check-input ms-2" type="checkbox" name="image-clear" id="image-clear_id"> 
+                                                <label class="form-check-label ms-2" for="image-clear_id">Clear Image</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-12 mt-2">
+                                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-lg px-5" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
