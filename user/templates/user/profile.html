@@ -1,7 +1,16 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
 {% block body %}
     {% for profile in profiles %}
         {{ profile.user.username }} {{ profile.designation }} {{ profile.user.first_name}} {{ profile.user.last_name }}
+        <img src="{{ profile.image.url }}" width="32" height="32">
     {% endfor %}
+
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Register</button>
+    </form>    
 {% endblock %}
