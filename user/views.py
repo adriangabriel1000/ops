@@ -3,6 +3,14 @@ from django.contrib import messages
 from .forms import RegisterForm, ProfileForm, UserEditForm
 from .models import Profile
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+from .serializers import ProfileSerializer
+
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
 
 # Create your views here.
 def register(request):
@@ -47,3 +55,4 @@ def profile(request):
         'profile': profile,
         'user_form': user_form,
     })
+

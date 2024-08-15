@@ -12,10 +12,8 @@ class RegisterForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['initials', 'unique', 'address', 'idnum', 'cell', 'homenum', 'dob', 'designation', 'image']
-        widgets={
-            'dob': forms.DateInput(attrs={'type': 'datetime-local'}),
-        }
+        fields = ['initials', 'unique', 'address', 'idnum', 'cell', 'homenum', 'designation', 'image']
+
 
 class UserEditForm(forms.ModelForm):
     class Meta:

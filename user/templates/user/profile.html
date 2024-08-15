@@ -8,7 +8,8 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-6">
                 <div class="card shadow-lg p-3 bg-body-tertiary rounded" style="border-radius: 1rem;">
                     <div class="card-body text-center">
-                        <h4 class="fw-bold m-5">CHANGE PROFILE FOR USER: {{profile.user}}</h4> 
+                        <h4 class="fw-bold mt-2">EDIT PROFILE</h4>
+                        <h6 class="fw-bold mb-5">User ID: {{profile.user}}</h6> 
                         <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div data-mdb-input-init class="form-outline form-white"></div>
@@ -20,7 +21,6 @@
                                         <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{profile.user.first_name}}" />
                                     </div>
                                 </div>
-                                
                                 <div class="row">
                                     <div class="col-3 mt-2 text-end">
                                         <h6><label class="form-label" for="id_last_name">Last Name</label></h6>
@@ -43,7 +43,7 @@
                                         <input type="text" name="email" id="id_email" class="form-control" value="{{profile.user.email}}" />
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!--<div class="row">
                                     <div class="col-3 mt-2 text-end">
                                         <h6><label class="form-label" for="id_dob">Date of Birth</label></h6>
                                     </div>
@@ -51,7 +51,7 @@
                                         <input type="datetime-local" name="dob" value="{{profile.dob}}" id="id_dob" class="dateinput form-control" />
                                         <p class="text-start">Currently: {{ profile.dob }}
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="row">
                                     <div class="col-3 mt-2 text-end">
                                         <h6><label class="form-label" for="id_designation">Designation</label></h6>

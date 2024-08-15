@@ -27,11 +27,13 @@ SECRET_KEY = "django-insecure-2mcwu_-6_3$gd^=(_c3xxelr@dfo_e)+_#yg#w^z0)+(_@wa!1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+#PythonAnywhere
+#ALLOWED_HOSTS = ['adrian1000.pythonanywhere.com']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'home',
     "user.apps.UserConfig",
     'crispy_forms',
@@ -121,17 +123,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+#PythonAnywhere
+#STATIC_URL =  "static/"
+#STATIC_ROOT = "/home/adrian1000/oplauncher/static"
+#Static Files Section in 'Web'
+#URL /static/ , Directory /home/adrian1000/oplauncher/launcher/static
+#Run python3 manage.py collectstatic
+
 LOGIN_REDIRECT_URL = 'home:index'
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'pictures')
 MEDIA_URL = '/pictures/'
+#PythonAnywhere
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#Static Files Section in 'Web'
+#URL /media/ , Directory /home/adrian1000/oplauncher/media
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
