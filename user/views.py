@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import RegisterForm, ProfileForm
+from .forms import RegisterForm, ProfileForm, UserEditForm
 from .models import Profile
 from django.contrib.auth.decorators import login_required
 
@@ -22,11 +22,28 @@ def register(request):
 
 @login_required
 def profile(request):
-    user = request.user
-    form = ProfileForm(instance=request.user.profile, data=request.POST)
-    profiles = Profile.objects.get(user=user)
+    if request.method == 'POST':
+        profile_form = ProfileForm(instance=request.user.profile, data=request.POST)
+        profile = Profile.objects.get(user=request.user)
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            message = "Profile saved successfully!"
+            profile_form = ProfileForm(instance=request.user.profile, data=request.POST)
+            profile = Profile.objects.get(user=request.user)
+            user_form = UserEditForm(instance=request.user, data=request.POST)
+            return render(request, 'home/index.html', {
+                'message': message,
+            })
+    else:
+        profile_form = ProfileForm(instance=request.user.profile, data=request.POST)
+        profile = Profile.objects.get(user=request.user)
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        message =""
 
     return render(request, 'user/profile.html', {
-        'form': form,
-        'profiles': profiles,
+        'profile_form': profile_form,
+        'profile': profile,
+        'user_form': user_form,
     })

@@ -1,5 +1,6 @@
 {% extends 'home/base.html' %}
 {% load static %}
+{% load crispy_forms_tags  %}
 
 {% block body %}
     <div class="container text-center py-5">
@@ -7,62 +8,39 @@
             <div class="col-12 col-md-8 col-lg-6 col-xl-6">
                 <div class="card shadow-lg p-3 bg-body-tertiary rounded" style="border-radius: 1rem;">
                     <div class="card-body text-center">
-                        <h4 class="fw-bold m-5">CHANGE PROFILE FOR USER: {{profiles.user}}</h4> 
-                        <form method="POST">
+                        <h4 class="fw-bold m-5">CHANGE PROFILE FOR USER: {{profile.user}}</h4> 
+                        <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div data-mdb-input-init class="form-outline form-white"></div>
                                 <div class="row">
                                     <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_first_name">First Name</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="first_name" id="id_first_name" class="form-control" value="{{profile.user.first_name}}" />
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_last_name">Last Name</label></h6>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" name="last_name" value="{{profile.user.last_name}}" id="id_last_name" class="form-control" />
+                                    </div>
+                                    <div class="col-3 mt-2 text-end">
                                         <h6><label class="form-label" for="id_initials">Initials</label></h6>
                                     </div>
-                                    <div class="col-9">
-                                        <input type="text" name="initials" id="id_initials" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.initials}}</p>
+                                    <div class="col-2">
+                                        <input type="text" name="initials" value="{{profile.initials}}" id="id_initials" class="form-control" />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3 mt-2 text-end">
-                                        <h6><label class="form-label" for="id_unique">Unique Number</label></h6>
+                                        <h6><label class="form-label" for="id_email">Email</label></h6>
                                     </div>
                                     <div class="col-9">
-                                        <input type="text" name="unique" id="id_unique" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.unique}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 mt-2 text-end">
-                                        <h6><label class="form-label" for="id_address">Address</label></h6>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="text" name="address" id="id_address" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.address}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 mt-2 text-end">
-                                        <h6><label class="form-label" for="id_idnum">ID Number</label></h6>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="text" name="idnum" id="id_idnum" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.idnum}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 mt-2 text-end">
-                                        <h6><label class="form-label" for="id_cell">Cell Number</label></h6>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="text" name="cell" id="id_cell" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.cell}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3 mt-2 text-end">
-                                        <h6><label class="form-label" for="id_homenum">Home Number</label></h6>
-                                    </div>
-                                    <div class="col-9">
-                                        <input type="text" name="homenum" id="id_homenum" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.homenum}}</p>
+                                        <input type="text" name="email" id="id_email" class="form-control" value="{{profile.user.email}}" />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -70,8 +48,8 @@
                                         <h6><label class="form-label" for="id_dob">Date of Birth</label></h6>
                                     </div>
                                     <div class="col-9">
-                                        <input type="text" name="dob" id="id_dob" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.dob}}</p>
+                                        <input type="datetime-local" name="dob" value="{{profile.dob}}" id="id_dob" class="dateinput form-control" />
+                                        <p class="text-start">Currently: {{ profile.dob }}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -79,21 +57,63 @@
                                         <h6><label class="form-label" for="id_designation">Designation</label></h6>
                                     </div>
                                     <div class="col-9">
-                                        <input type="text" name="designation" id="id_designation" class="form-control" />
-                                        <p class="text-start">The current value is set to: {{profiles.designation}}</p>
+                                        <input type="text" name="designation" value="{{profile.designation}}" id="id_designation" class="form-control" />
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_unique">Unique Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="unique" value="{{profile.unique}}" id="id_unique" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_address">Address</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="address" value="{{profile.address}}" id="id_address" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_idnum">ID Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="idnum" value="{{profile.idnum}}" id="id_idnum" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_cell">Cell Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="cell" value="{{profile.cell}}" id="id_cell" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 mt-2 text-end">
+                                        <h6><label class="form-label" for="id_homenum">Home Number</label></h6>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="homenum" value="{{profile.homenum}}" id="id_homenum" class="form-control" />
+                                    </div>
+                                </div>
+
+
                                 <div class="row border shadow-sm p-2">
                                     <div class="col-3 mt-2 text-end">
                                         <h6><label class="form-label" for="id_image">Profile Pic</label></h6>
                                     </div>
                                     <div class="col-9">
                                         <input type="file" name="image" accept="image/*" id="id_image" class="form-control" />
-                                        <p class="text-start">Currently: {{profiles.image}}</p>
+                                        <!--<p class="text-start">Currently: {{profile.image}}</p>-->
                                         <div class="row d-flex flex-row align-items-center">
                                             <div class="col-2">
                                             <!--<div class="text-start">-->
-                                                <img class="float-start" src="/pictures/{{profiles.image}}" width="60" height="60">
+                                                <img class="float-start" src="/pictures/{{profile.image}}" width="60" height="60">
                                             </div>
                                             <div class="col-10 d-flex justify-content-start">
                                                 <input class="form-check-input ms-2" type="checkbox" name="image-clear" id="image-clear_id"> 
