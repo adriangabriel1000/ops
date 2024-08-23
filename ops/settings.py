@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rest_framework',
     'home',
+    'manplan',
     "user.apps.UserConfig",
     'crispy_forms',
     "crispy_bootstrap5",
