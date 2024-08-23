@@ -30,7 +30,7 @@
                         <a class="nav-link" href="#">Attendance</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">ManPlan</a>
+                        <a class="nav-link" href="{% url 'manplan:manplanIndex' %}">ManPlan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile' %}">Profile</a>
@@ -46,7 +46,7 @@
                                 <li><a class="dropdown-item" href="{% url 'profile' %}">Edit Profile</a></li>
                                 <li><a class="dropdown-item" href="{% url 'admin:index' %}">Django Admin</a></li>
                                 <li><a class="dropdown-item" href="/profileapi">Profile API</a></li>
-                                <li><a class="dropdown-item" href="profileapi/?format=json">JSON</a></li>
+                                <li><a class="dropdown-item" href="/profileapi/?format=json">JSON</a></li>
                             </ul>
                         </li>
                     </ul>

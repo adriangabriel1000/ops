@@ -1,11 +1,8 @@
-    <form method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Login</button>
-    </form>
-    
-        <form method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Register</button>
-    </form>    
+Manplan Model
+
+Date
+Time
+Shift
+Cycle
+User
+Postition
