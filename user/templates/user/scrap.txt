@@ -1,8 +1,8 @@
 Manplan Model
 
+User
 Date
 Time
 Shift
 Cycle
-User
 Postition
