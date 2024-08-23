@@ -6,3 +6,9 @@ Shift
 Cycle
 Postition
 Comments
+
+
+Shift Cycle Model
+Date
+Shift (ABCD1234)
+

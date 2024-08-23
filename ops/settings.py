@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'home',
     'manplan',
+    'cycle',
     "user.apps.UserConfig",
     'crispy_forms',
     "crispy_bootstrap5",
