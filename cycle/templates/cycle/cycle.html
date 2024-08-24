@@ -1,5 +1,62 @@
 {% extends 'home/base.html' %}
 
 {% block body %}
-    Shift Cycle Index Page
+    <div class="container-fluid ps-1 pe-1">
+        <div class="card shadow-lg ps-1 pe-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="card-header text-bg-light sticky-top" style="top: 65px;">
+                        <div class="d-flex justify-content-end">
+                        <button class="btn btn-outline-primary btn-sm m-1" name="btn24" value="2024">2024</button>
+                        <button class="btn btn-outline-primary btn-sm m-1">2025</button>
+                        <button class="btn btn-outline-primary btn-sm m-1">2026</button>
+                        <button class="btn btn-outline-primary btn-sm m-1">2027</button>
+                        <button class="btn btn-outline-primary btn-sm m-1">2028</button>
+                        <button class="btn btn-outline-primary btn-sm m-1">2029</button>
+                    </div>
+                    </div>
+                    <table class="table">
+                        <thead class="sticky-top" style="top: 110px;">
+                            <tr class="text-center">
+                                <th scope="col">Day</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">A</th>
+                                <th scope="col">B</th>
+                                <th scope="col">C</th>
+                                <th scope="col">D</th>
+                                <th scope="col">E</th>
+                                <th scope="col">F</th>
+                                <th scope="col">T1</th>
+                                <th scope="col">T2</th>
+                                <th scope="col">T3</th>
+                                <th scope="col">T4</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cycle in cycles %}
+                            <tr class="text-center" style="font-size: 0.7rem;"">
+                                <th scope="row">{{ cycle.date|date:"D" }}</th>
+                                <td>{{ cycle.date|date:"j M" }}</td>
+                                <td>{{ cycle.aShift }}</td>
+                                <td>{{ cycle.bShift }}</td>
+                                <td>{{ cycle.cShift }}</td>
+                                <td>{{ cycle.dShift }}</td>
+                                <td>{{ cycle.eShift }}</td>
+                                <td>{{ cycle.fShift }}</td>
+                                <td>{{ cycle.team1 }}</td>
+                                <td>{{ cycle.team2 }}</td>
+                                <td>{{ cycle.team3 }}</td>
+                                <td>{{ cycle.team4 }}</td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>  
+    </div>
+
+
 {% endblock %}
