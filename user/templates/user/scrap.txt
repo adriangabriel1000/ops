@@ -12,3 +12,23 @@ Shift Cycle Model
 Date
 Shift (ABCD1234)
 
+<th scope="row">{{ cycle.allDate|date:"j M" }}{{ cycle.date|date:"D" }}</th>
+                                <td>{% if cycle.date|date:"M" == 'Jan' %}{{ cycle.date|date:"j M" }}{% endif %}</td>
+                                <td>{% if cycle.date|date:"M" == 'Feb' %}{{ cycle.date|date:"j M" }}{% endif %}</td>
+                                <td>{{ cycle }}</td>
+
+
+                                <th scope="row">{{ cycle.allDate|date:"j M" }}{{ cycle.date|date:"D" }}</th>
+                                <td>{% if cycle.date|date:"M" == 'Jan' %}{{ cycle.date|date:"j M" }}{% endif %}</td>
+                                <td>{% if cycle.date|date:"M" == 'Feb' %}{{ cycle.date|date:"j M" }}{% endif %}</td>
+                                <td>{{ cycle }}</td>
+                                <td>{{ cycle.caShift }}</td>
+
+
+    janDate=[]
+    for x in range(1, 43):
+        if x < 32:
+            janDate.append(datetime(2024,1,x,12,0,0))
+        else:
+            janDate.append('')
+    print(janDate)

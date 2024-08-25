@@ -17,37 +17,52 @@
                     </div>
                     </div>
                     <table class="table">
-                        <thead class="sticky-top" style="top: 110px;">
+                        <thead class="sticky-top" style="top: 110px; font-size: 0.7rem;">
                             <tr class="text-center">
                                 <th scope="col">Day</th>
-                                <th scope="col">Date</th>
+                                <th scope="col">Jan</th>
+                                <th scope="col">Feb</th>
+                                <th scope="col">Mar</th>
+                                <th scope="col">Apr</th>
+                                <th scope="col">May</th>
+                                <th scope="col">Jun</th>
+                                <th scope="col">Jul</th>
+                                <th scope="col">Aug</th>
+                                <th scope="col">Sep</th>
+                                <th scope="col">Oct</th>
+                                <th scope="col">Nov</th>
+                                <th scope="col">Dec</th>
                                 <th scope="col">A</th>
                                 <th scope="col">B</th>
                                 <th scope="col">C</th>
                                 <th scope="col">D</th>
                                 <th scope="col">E</th>
                                 <th scope="col">F</th>
-                                <th scope="col">T1</th>
-                                <th scope="col">T2</th>
-                                <th scope="col">T3</th>
-                                <th scope="col">T4</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            {% for cycle in cycles %}
-                            <tr class="text-center" style="font-size: 0.7rem;"">
-                                <th scope="row">{{ cycle.date|date:"D" }}</th>
-                                <td>{{ cycle.date|date:"j M" }}</td>
-                                <td>{{ cycle.aShift }}</td>
-                                <td>{{ cycle.bShift }}</td>
-                                <td>{{ cycle.cShift }}</td>
-                                <td>{{ cycle.dShift }}</td>
-                                <td>{{ cycle.eShift }}</td>
-                                <td>{{ cycle.fShift }}</td>
-                                <td>{{ cycle.team1 }}</td>
-                                <td>{{ cycle.team2 }}</td>
-                                <td>{{ cycle.team3 }}</td>
-                                <td>{{ cycle.team4 }}</td>
+                            {% for cycle in cycleAndDates %}
+                            <tr class="text-center" style="font-size: 0.7rem;">
+                                <th scope="row">{{ cycle.cycleDate|date:"D" }}</th>
+                                <td>{{ cycle.janDate|date:"j M" }}</td>
+                                <td>{{ cycle.allDate|date:"j M" }}</td>
+                                <td>{{ cycle.allDate|date:"j M" }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ cycle.caShift }}</td>
+                                <td>{{ cycle.cbShift }}</td>
+                                <td>{{ cycle.ccShift }}</td>
+                                <td>{{ cycle.cdShift }}</td>
+                                <td>{{ cycle.ceShift }}</td>
+                                <td>{{ cycle.cfShift }}</td>
 
                             </tr>
                             {% endfor %}
