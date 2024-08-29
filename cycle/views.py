@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from .models import Cycle
 from datetime import datetime, timedelta
+import calendar
 
 
 # Create your views here.
@@ -38,11 +39,11 @@ def index(request):
     # Making janDate
 
     janDate=calcDate(2024,1)
-    febDate=[]
-    marDate=[]
-    aprDate=[]
-    mayDate=[]
-    junDate=[]
+    febDate=calcDate(2024,2)
+    marDate=calcDate(2024,3)
+    aprDate=calcDate(2024,4)
+    mayDate=calcDate(2024,5)
+    junDate=calcDate(2024,6)
     julDate=[]
     augDate=[]
     sepDate=[]
@@ -52,14 +53,14 @@ def index(request):
 
 
     for x in range(1, 43):
-        cycleAndDates.append({"cycleDate":cycles[x-1].date, "janDate":janDate[x-1], "caShift":cycles[x-1].aShift, "cbShift":cycles[x-1].bShift, "ccShift":cycles[x-1].cShift, "cdShift":cycles[x-1].dShift, "ceShift":cycles[x-1].eShift, "cfShift":cycles[x-1].fShift},)
+        cycleAndDates.append({"cycleDate":cycles[x-1].date, "janDate":janDate[x-1], "febDate": febDate[x-1], "marDate": marDate[x-1], "aprDate": aprDate[x-1], "mayDate": mayDate[x-1], "junDate": junDate[x-1], "caShift":cycles[x-1].aShift, "cbShift":cycles[x-1].bShift, "ccShift":cycles[x-1].cShift, "cdShift":cycles[x-1].dShift, "ceShift":cycles[x-1].eShift, "cfShift":cycles[x-1].fShift},)
     
     xd = datetime(2024,2,12,12,0,0)
 
-    print('-----------Start-----------')
-    print(xd-timedelta(days=42))
-    print(calcDate(2024, 3))
-    print('-----------end-----------')
+    # print('-----------Start-----------')
+    # # print(xd-timedelta(days=42))
+    # # print(calcDate(2024, 3))
+    # print('-----------end-----------')
 
     return render(request, 'cycle/cycle.html', {
         'cycles': cycles,
@@ -71,11 +72,39 @@ def index(request):
 
 def calcDate(yr, mnth):
     aDate = []
-    for x in range(1, 43):
-        try:
-            aDate.append(datetime(yr,mnth,x,12,0,0))
-        except:
-            aDate.append('')
+    # print(calendar.monthrange(yr, mnth)[1])
+    print('----------' + str(mnth) + '-----------')
+    if yr == 2024 and mnth == 1:
+        for x in range(1, 43):
+            try:
+                aDate.append(datetime(yr,mnth,x,12,0,0))
+            except:
+                aDate.append('')
+    else:
+        #dateMulti = ((mnth - 1) * 42) - calendar.monthrange(yr, mnth-1)[1]+1 #month 2= 42-31=11, 3=44-30=14
+        dateMulti = datetime(yr,1,1,12,0,0) + timedelta(days=((mnth - 1) * 42))
+        dateMultiA = int(dateMulti.day)
+        dateMultiB = 1
+        stoBeginingVal = 42 - (dateMultiA - 1)
+        # print(stoBeginingVal)
+        # print(dateMulti.day+1)
+        #print(dateMultiB)
+        for x in range(1, 43):
+            try:
+                aDate.append(datetime(yr,mnth,dateMultiA,12,0,0))
+                dateMultiA += 1
+                # print(dateMultiA)
+
+            except:
+                if x > stoBeginingVal: #int(calendar.monthrange(yr, mnth-1)[1]):
+                    aDate.append(datetime(yr,mnth,dateMultiB,12,0,0))
+                    dateMultiB += 1
+                    # print(calendar.monthrange(yr, mnth-1)[1])
+                else:
+                    aDate.append('')
+            
+            
+            
 
     return aDate
     
