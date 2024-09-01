@@ -84,11 +84,17 @@ def calcDate(yr, mnth):
         #dateMulti = ((mnth - 1) * 42) - calendar.monthrange(yr, mnth-1)[1]+1 #month 2= 42-31=11, 3=44-30=14
         dateMulti = datetime(yr,1,1,12,0,0) + timedelta(days=((mnth - 1) * 42))
         dateMultiA = int(dateMulti.day)
+        monthMulti = int(dateMulti.month) - mnth
+        if monthMulti == 1:
+            finalMNTH = datetime(yr,5,1,12,0,0) - datetime(yr,1,1,12,0,0) 
+            print(finalMNTH.days)
+            print('PlaceKeeper = ' + str((42*5) - finalMNTH.days))
         dateMultiB = 1
         stoBeginingVal = 42 - (dateMultiA - 1)
         # print(stoBeginingVal)
         # print(dateMulti.day+1)
         #print(dateMultiB)
+ 
         for x in range(1, 43):
             try:
                 aDate.append(datetime(yr,mnth,dateMultiA,12,0,0))
@@ -102,7 +108,7 @@ def calcDate(yr, mnth):
                     # print(calendar.monthrange(yr, mnth-1)[1])
                 else:
                     aDate.append('')
-            
+ 
             
             
 
