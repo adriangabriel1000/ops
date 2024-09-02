@@ -8,12 +8,10 @@ import math
 # Create your views here.
 def index(request):
     cycles = Cycle.objects.all()
-    # allDates = []
     cycleAndDates = []
     yrs = 2024
     if request.method == 'GET':
         if 'yr' in request.GET:
-            print(request.GET['yr'])
             yrs = int(request.GET['yr'])
 
     janDate=calcDate(yrs,1)
@@ -35,7 +33,6 @@ def index(request):
     return render(request, 'cycle/cycle.html', {
         'cycles': cycles,
         'yrs': yrs,
-        # 'allDates': allDates,
         'cycleAndDates': cycleAndDates,
     })
 
@@ -57,7 +54,6 @@ def calcDate(yr, mnth):
                 placeKeeper = 0
         except:
             aDate.append('')
-
 
     return aDate
     
