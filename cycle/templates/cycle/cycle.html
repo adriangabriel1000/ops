@@ -4,19 +4,18 @@
     <div class="container-fluid ps-1 pe-1">
         <div class="card shadow-lg ps-1 pe-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
             <div class="card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="card-header text-bg-light sticky-top" style="top: 65px;">
-                        <div class="d-flex justify-content-end">
-                        <button class="btn btn-outline-primary btn-sm m-1" name="btn24" value="2024">2024</button>
-                        <button class="btn btn-outline-primary btn-sm m-1">2025</button>
-                        <button class="btn btn-outline-primary btn-sm m-1">2026</button>
-                        <button class="btn btn-outline-primary btn-sm m-1">2027</button>
-                        <button class="btn btn-outline-primary btn-sm m-1">2028</button>
-                        <button class="btn btn-outline-primary btn-sm m-1">2029</button>
+                <form method="get">
+                    <div class="card-header text-bg-light sticky-top w-50" style="top: 65px;">
+                        <div class="text-center" style="font-size: 25px;">{{ yrs }} Operating Shift Cycle
+                            <button class="btn btn-outline-primary btn-sm ms-3" style="--bs-btn-font-size: .7rem;" name="yr" value="2024">2024</button>
+                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2025">2025</button>
+                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2026">2026</button>
+                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2027">2027</button>
+                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2028">2028</button>
+                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2029">2029</button>
+                        </div>
                     </div>
-                    </div>
-                    <table class="table">
+                    <table class="table table-hover table-bordered rounded w-50">
                         <thead class="sticky-top" style="top: 110px; font-size: 0.7rem;">
                             <tr class="text-center">
                                 <th scope="col">Day</th>
@@ -31,43 +30,46 @@
                                 <th scope="col">Sep</th>
                                 <th scope="col">Oct</th>
                                 <th scope="col">Nov</th>
-                                <th scope="col">Dec</th>
+                                <th scope="col" class="border-start border-primary">Dec</th>
                                 <th scope="col">A</th>
                                 <th scope="col">B</th>
                                 <th scope="col">C</th>
                                 <th scope="col">D</th>
                                 <th scope="col">E</th>
                                 <th scope="col">F</th>
-
                             </tr>
                         </thead>
                         <tbody>
                             {% for cycle in cycleAndDates %}
-                            <tr class="text-center" style="font-size: 0.7rem;">
-                                <th scope="row">{{ cycle.cycleDate|date:"D" }}</th>
-                                <td>{{ cycle.janDate|date:"j M" }}</td>
-                                <td>{{ cycle.febDate|date:"j M" }}</td>
-                                <td>{{ cycle.marDate|date:"j M" }}</td>
-                                <td>{{ cycle.aprDate|date:"j M" }}</td>
-                                <td>{{ cycle.mayDate|date:"j M" }}</td>
-                                <td>{{ cycle.junDate|date:"j M" }}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ cycle.caShift }}</td>
-                                <td>{{ cycle.cbShift }}</td>
-                                <td>{{ cycle.ccShift }}</td>
-                                <td>{{ cycle.cdShift }}</td>
-                                <td>{{ cycle.ceShift }}</td>
-                                <td>{{ cycle.cfShift }}</td>
-
-                            </tr>
+                                {% if cycle.cycleDate|date:"D" == "Sat" or cycle.cycleDate|date:"D" == "Sun" %}
+                                    <tr class="text-center table-primary" style="font-size: 0.7rem;">
+                                {% else %}
+                                    <tr class="text-center" style="font-size: 0.7rem;">
+                                {% endif %}
+                                    <th scope="row">{{ cycle.cycleDate|date:"D" }}</th>
+                                    <td>{{ cycle.janDate|date:"j" }}</td>
+                                    <td>{{ cycle.febDate|date:"j" }}</td>
+                                    <td>{{ cycle.marDate|date:"j" }}</td>
+                                    <td>{{ cycle.aprDate|date:"j" }}</td>
+                                    <td>{{ cycle.mayDate|date:"j" }}</td>
+                                    <td>{{ cycle.junDate|date:"j" }}</td>
+                                    <td>{{ cycle.julDate|date:"j" }}</td>
+                                    <td>{{ cycle.augDate|date:"j" }}</td>
+                                    <td>{{ cycle.sepDate|date:"j" }}</td>
+                                    <td>{{ cycle.octDate|date:"j" }}</td>
+                                    <td>{{ cycle.novDate|date:"j" }}</td>
+                                    <td class="border-start border-primary">{{ cycle.decDate|date:"j" }}</td>
+                                    <td>{{ cycle.caShift }}</td>
+                                    <td>{{ cycle.cbShift }}</td>
+                                    <td>{{ cycle.ccShift }}</td>
+                                    <td>{{ cycle.cdShift }}</td>
+                                    <td>{{ cycle.ceShift }}</td>
+                                    <td>{{ cycle.cfShift }}</td>
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+
                 </form>
             </div>
         </div>  
