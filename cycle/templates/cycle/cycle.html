@@ -1,22 +1,16 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
 {% block body %}
     <div class="container-fluid ps-1 pe-1">
         <div class="card shadow-lg ps-1 pe-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
+            <div class="card-header text-bg-light w-50" >
+                <div class="text-center" id="shCyc"><img src="{% static 'home/images/koeberg.png' %}" alt="koeberg" width="500px"><p>{{ yrs }} Operating Shift Cycle</p></div>
+            </div>
             <div class="card-body">
                 <form method="get">
-                    <div class="card-header text-bg-light sticky-top w-50" style="top: 65px;">
-                        <div class="text-center" style="font-size: 25px;">{{ yrs }} Operating Shift Cycle
-                            <button class="btn btn-outline-primary btn-sm ms-3" style="--bs-btn-font-size: .7rem;" name="yr" value="2024">2024</button>
-                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2025">2025</button>
-                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2026">2026</button>
-                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2027">2027</button>
-                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2028">2028</button>
-                            <button class="btn btn-outline-primary btn-sm" style="--bs-btn-font-size: .7rem;" name="yr" value="2029">2029</button>
-                        </div>
-                    </div>
                     <table class="table table-hover table-bordered rounded w-50">
-                        <thead class="sticky-top" style="top: 110px; font-size: 0.7rem;">
+                        <thead class="" style="top: 110px; font-size: 0.7rem;">
                             <tr class="text-center">
                                 <th scope="col">Day</th>
                                 <th scope="col">Jan</th>

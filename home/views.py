@@ -5,7 +5,4 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def index(request):
-    quals = "abcd"
-    return render(request, 'home/index.html', {
-        'quals': quals,
-    })
+    return render(request, 'home/index.html')

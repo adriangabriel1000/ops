@@ -4,5 +4,6 @@ from . import views
 app_name = 'cycle'
 urlpatterns = [
     path('', views.index, name='cycle'),
+    
 
 ]
