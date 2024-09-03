@@ -5,7 +5,9 @@
     <div class="container-fluid ps-1 pe-1">
         <div class="card shadow-lg ps-1 pe-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
             <div class="card-header text-bg-light w-50" >
-                <div class="text-center" id="shCyc"><img src="{% static 'home/images/koeberg.png' %}" alt="koeberg" width="500px"><p>{{ yrs }} Operating Shift Cycle</p></div>
+                <div class="text-center" id="shCyc">
+                    <img src="{% static 'home/images/koeberg.png' %}"  class="me-4" alt="koeberg" width="200px" height="100">{{ yrs }} Operating Shift Cycle
+                </div>
             </div>
             <div class="card-body">
                 <form method="get">
