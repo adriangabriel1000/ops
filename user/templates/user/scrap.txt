@@ -32,3 +32,26 @@ Shift (ABCD1234)
         else:
             janDate.append('')
     print(janDate)
+
+
+
+
+
+
+
+sudo nano /etc/nginx/sites-available/djangoops
+
+server {
+        listen 80;
+        server_name 51.21.118.137;
+
+        location = /favicon.ico { access_log off; log_not_found off; }
+        location /static/ {
+                root /home/ubuntu/ops/home;
+        }
+        
+        location / {
+                include proxy_params;
+                proxy_pass http://unix:/run/gunicorn.sock;
+        }
+}

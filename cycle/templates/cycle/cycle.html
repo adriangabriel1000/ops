@@ -2,17 +2,16 @@
 {% load static %}
 
 {% block body %}
-    <div class="container-fluid ps-1 pe-1">
-        <div class="card shadow-lg ps-1 pe-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
-            <div class="card-header text-bg-light w-50" >
-                <div class="text-center" id="shCyc">
+    <!--<div class="container-fluid ps-1 pe-1">-->
+        <div class="card shadow-lg ps-1 pe-1 m-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
+
+            <div class="card-body">
+                <div class="text-center w-50 mb-3" id="shCyc">
                     <img src="{% static 'home/images/koeberg.png' %}"  class="me-4" alt="koeberg" width="200px" height="100">{{ yrs }} Operating Shift Cycle
                 </div>
-            </div>
-            <div class="card-body">
                 <form method="get">
                     <table class="table table-hover table-bordered rounded w-50">
-                        <thead class="" style="top: 110px; font-size: 0.7rem;">
+                        <thead class="" style="font-size: 0.7rem;">
                             <tr class="text-center">
                                 <th scope="col">Day</th>
                                 <th scope="col">Jan</th>
@@ -69,7 +68,7 @@
                 </form>
             </div>
         </div>  
-    </div>
+    <!--</div>-->
 
 
 {% endblock %}
