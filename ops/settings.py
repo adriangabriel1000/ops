@@ -29,6 +29,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 #PythonAnywhere
 #ALLOWED_HOSTS = ['adrian1000.pythonanywhere.com']
+#AWS
+#ALLOWED_HOSTS = ['51.21.118.137', 'localhost']
 
 # Application definition
 
@@ -125,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATIC_ROOT = "/home/ubuntu/ops/home"
+STATIC_ROOT = "/home/ubuntu/ops"
 #PythonAnywhere
 #STATIC_URL =  "static/"
 #STATIC_ROOT = "/home/adrian1000/oplauncher/static"
