@@ -3,14 +3,14 @@
 
 {% block body %}
     <!--<div class="container-fluid ps-1 pe-1">-->
-        <div class="card shadow-lg ps-1 pe-1 m-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
-            <div class="card-body">
+        <!--<div class="card shadow-lg ps-1 pe-1 m-1 bg-body-tertiary rounded" style="border-radius: 1rem;">
+            <div class="card-body">-->
                 <form method="get">
-                    <table class="table table-hover table-bordered rounded w-50">
-                        <thead class="" style="font-size: 0.7rem;">
+                    <table class="table table-hover table-bordered rounded shadow-lg w-50 m-1">
+                        <thead style="font-size: 0.7rem;">
                             <tr>
-                                <th class="text-center w-50 mb-3" id="shCyc" colspan="19">
-                                    <img src="{% static 'home/images/koeberg.png' %}"  class="me-4" alt="koeberg" width="200px" height="100">{{ yrs }} Operating Shift Cycle
+                                <th class="text-center w-50 p-2" id="shCyc" colspan="19">
+                                    <img src="{% static 'home/images/koeberg.png' %}"  class="rounded-5 me-4" alt="koeberg" width="140px" height="80">{{ yrs }} Operating Shift Cycle
                                 </th>
                             </tr>
                             <tr class="text-center">
@@ -67,8 +67,8 @@
                     </table>
 
                 </form>
-            </div>
-        </div>  
+            <!--</div>
+        </div> -->
     <!--</div>-->
 
 
