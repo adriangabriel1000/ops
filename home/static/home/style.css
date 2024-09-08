@@ -6,3 +6,15 @@
 h5 {
     color: #6563f6; 
 }
+
+#shCyc {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: white;
+    background-color: black;
+}
+
+#manPlan {
+    font-size: 10px;
+}
