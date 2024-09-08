@@ -4,9 +4,9 @@ from django.db import models
 class Employee(models.Model):
     name = models.CharField(max_length=200, blank=False)
     unNum = models.CharField(max_length=200, blank=True)
-    designation = models.CharField(max_length=200, blank=False)
+    designation = models.CharField(max_length=200, blank=True)
     ftm = models.CharField(max_length=3, blank=True)
-    shift = models.CharField(max_length=1, blank=True)
+    shift = models.CharField(max_length=1, blank=False)
     address = models.CharField(max_length=200, blank=True)
     idnum = models.CharField(max_length=200, blank=True)
     cell = models.CharField(max_length=200, blank=True)
