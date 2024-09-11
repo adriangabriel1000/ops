@@ -2,14 +2,13 @@ from django.shortcuts import render, redirect
 from .models import *
 import string
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # Create your views here.
 def index(request):
     employees = Employee.objects.all()
     schedules = Schedule.objects.all()
-    aSh = Schedule.objects.filter(employee__shift__contains='A', date=datetime.today())
-
+    aSh = Schedule.objects.filter(employee__shift__contains='A') #filter(employee__shift__contains='A', date__contains=datetime.today().date())
     aEmployees = Employee.objects.filter(shift='A')
     bEmployees = Employee.objects.filter(shift='B')
     cEmployees = Employee.objects.filter(shift='C')
@@ -17,33 +16,51 @@ def index(request):
     eEmployees = Employee.objects.filter(shift='E')
     fEmployees = Employee.objects.filter(shift='F')
     oEmployees = Employee.objects.filter(shift='O')
-    aList = []
-    # for aEm in aEmployees:
-    #     print(aEm)
-    
-    
-    
-    # print(aSh)
-    # print(datetime.now().date())
-    for sh in aSh:
-        print(sh)
+    aList = {}
 
+    # for sh in aSh:
+    #     print(sh.employee)
+    aTemp = []
     dateList = []
-    # print(datetime(datetime.today().year,datetime.today().month,datetime.today().day -5,12,1,1 ))
-    # for x in range(-7,42):
-    #     dateList.append(datetime.today() + timedelta(x))
-        # todayList.append(datetime(datetime.today().year,datetime.today().month,datetime.today().day + x,12,1,1 ))
-    # print(dateList)
+    for x in range(-7,42):
+        dateList.append(datetime.today().date() + timedelta(x))
 
+    # for emp in aEmployees:
+    #     for date in dateList:
+    #         # print(date) 
+    #         for sh in aSh:
+    #             if sh.employee == emp:
+    #                 if 
 
-    # for schedule in schedules:
-    #     if datetime.now().date() == schedule.date.date():
-    #         print(schedule.position)
+            
+
+    for emp in aEmployees:
+        for a in aSh:
+            if a.employee == emp:
+                print('x')
+                for date in dateList:
+                    if a.date.date() == date:
+                        if a.employee == emp:
+                            aTemp.append(a.position)
+                    else:
+                        aTemp.append(' ')
+            else:
+                for date in dateList:
+                    aTemp.append(' ')
+            
+
+        aList.update({emp: aTemp}) 
+        aTemp=[]
+                    
+                    # print('got date')
+                # for emp in aEmployees:
+    print(aList)
     
 
+        
 
     return render(request, 'manplan/manplan.html', {
-        'counter': range(100),
+        'counter': range(49),
         'employees': employees,
         'aEmployees': aEmployees,
         'bEmployees': bEmployees,
@@ -52,6 +69,8 @@ def index(request):
         'eEmployees': eEmployees,
         'fEmployees': fEmployees,
         'oEmployees': oEmployees,
+        'dateList': dateList,
+        'aList': aList,
     })
 
 

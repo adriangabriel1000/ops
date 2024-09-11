@@ -22,8 +22,8 @@
                 <th scope="col">Id</th>
                 <th scope="col">Name</th>
                 <th scope="col">FTM</th>
-                {% for i in counter %}
-                    <th scope="col">{{i}}</th>
+                {% for date in dateList %}
+                    <th scope="col">{{date|date:"j"}}</th>
                 {% endfor %}
             </tr>
 
@@ -38,16 +38,23 @@
                     <th>N</th>
                 {% endfor %}
             </tr>
-            {% for aEmployee in aEmployees %}
+
+
+
+            {% for key, value in aList.items %}
             <tr>
-                <th scope="row">{{ aEmployee.id }}</th>
-                <td class="text-nowrap">{{ aEmployee.name }}</td>
+                <th scope="row">1</th>
+                <td class="text-nowrap">{{ key }}</td>
                 <td>FTL</td>
-                {% for i in counter %}
-                    <td>{{i}}</td>
+                {% for val in value %}
+                    <td>{{val}}</td>
                 {% endfor %}
             </tr>
             {% endfor %}
+
+
+
+
             <tr style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>B-Shift</th>
