@@ -3,6 +3,9 @@ from .models import *
 import string
 import random
 from datetime import datetime, timedelta, timezone
+from collections import Counter
+import operator 
+
 
 # Create your views here.
 def index(request):
@@ -25,38 +28,48 @@ def index(request):
     for x in range(-7,42):
         dateList.append(datetime.today().date() + timedelta(x))
 
-    # for emp in aEmployees:
-    #     for date in dateList:
-    #         # print(date) 
-    #         for sh in aSh:
-    #             if sh.employee == emp:
-    #                 if 
-
-            
-
+# ------------ A Shift ---------------------------------------
+    
+    aEmpCount = {}
     for emp in aEmployees:
+        aEmpCount.update({emp.name: Schedule.objects.filter(employee__name__contains=emp).count()})
+
+
+    
+
+    # print(aEmpCount)
+    # print(aEmpCount.get('Hairy Potter'))
+    # print(Schedule.objects.filter(employee__name__contains='Hairy Potter').count())
+
+    # print(aSh.values_list('employee'))                
+    empShList = []
+    # for a in aSh:
+    #     empShList.append(str(a.employee))
+
+    # print(operator.countOf(empShList, 'Hairy Potter'))
+    # print(sum('Hairy Potter' in str(a.employee) for a in aSh))
+    counter = 0
+    for emp in aEmployees:
+        counter = aEmpCount.get(emp.name)
         for a in aSh:
+            
             if a.employee == emp:
-                print('x')
                 for date in dateList:
                     if a.date.date() == date:
                         if a.employee == emp:
                             aTemp.append(a.position)
                     else:
                         aTemp.append(' ')
-            else:
-                for date in dateList:
-                    aTemp.append(' ')
+
             
 
         aList.update({emp: aTemp}) 
         aTemp=[]
                     
-                    # print('got date')
-                # for emp in aEmployees:
-    print(aList)
-    
 
+    # print(aList)
+    
+#---------------------- End A Shift ----------------------------------
         
 
     return render(request, 'manplan/manplan.html', {
