@@ -9,61 +9,31 @@ from datetime import datetime, timedelta
 
 # Create your views here.
 def index(request):
-    # employees = Employee.objects.all()
-    # aEmployees = Employee.objects.filter(shift='A')
-    # bEmployees = Employee.objects.filter(shift='B')
-    # cEmployees = Employee.objects.filter(shift='C')
-    # dEmployees = Employee.objects.filter(shift='D')
-    # eEmployees = Employee.objects.filter(shift='E')
-    # fEmployees = Employee.objects.filter(shift='F')
-    # oEmployees = Employee.objects.filter(shift='O')
-
     dateList = []
     for x in range(-7,42):
         dateList.append(datetime.today().date() + timedelta(x))
 
-    # ----------------------------Calculating Shift Row-----------------------------
-    # print(dateList)
-    cycle = Cycle.objects.all()
-    cycleList = []
+    # --------------- Calculate Shift Cycle
+    aCycle = []
+    bCycle = []
+    cCycle = []
+    dCycle = []
+    eCycle = []
+    fCycle = []
     ref = 0
-    # for date in dateList:
-    #     print(date)
-    # print(Cycle.objects.filter(id=ref))
-    # for cyc in cycle:   
-    #     # print(cyc.date.date())
-    #     print(str(cyc.id) + ' ' + str(cyc.date.date()) + ' ' + str(cyc.bShift))
-
     for date in dateList:
         finalMNTH = date - datetime(2024,1,1,12,0,0).date() 
         ref = finalMNTH.days - (math.trunc(finalMNTH.days / 42) * 42) + 3
-        cycleList.append({date: (Cycle.objects.filter(id=ref).values('bShift')[0]['bShift'])})
-
-        # print(str(date) + ' - ' + str(ref) + ' - ' + str(Cycle.objects.filter(id=ref).values('bShift')[0]['bShift']))
-
-        
-
-    print(cycleList)
-    # ----------------------------Calculating Shift Row-----------------------------
-
-    # aList = plan('A', dateList)
-    # bList = plan('B', dateList)
-    # cList = plan('C', dateList)
-    # dList = plan('D', dateList)
-    # eList = plan('E', dateList)
-    # fList = plan('F', dateList)
-    # oList = plan('O', dateList)
+        aCycle.append((Cycle.objects.filter(id=ref).values('aShift')[0]['aShift']))
+        bCycle.append((Cycle.objects.filter(id=ref).values('bShift')[0]['bShift']))
+        cCycle.append((Cycle.objects.filter(id=ref).values('cShift')[0]['cShift']))
+        dCycle.append((Cycle.objects.filter(id=ref).values('dShift')[0]['dShift']))
+        eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
+        fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
+    # --------------- End Calculate Shift Cycle
 
     return render(request, 'manplan/manplan.html', {
         'counter': range(49),
-        # 'employees': employees,
-        # 'aEmployees': aEmployees,
-        # 'bEmployees': bEmployees,
-        # 'cEmployees': cEmployees,
-        # 'dEmployees': dEmployees,
-        # 'eEmployees': eEmployees,
-        # 'fEmployees': fEmployees,
-        # 'oEmployees': oEmployees,
         'dateList': dateList,
         'aList': plan('A', dateList),
         'bList': plan('B', dateList),
@@ -72,6 +42,12 @@ def index(request):
         'eList': plan('E', dateList),
         'fList': plan('F', dateList),
         'oList': plan('O', dateList),
+        'aCycle': aCycle,
+        'bCycle': bCycle,
+        'cCycle': cCycle,
+        'dCycle': dCycle,
+        'eCycle': eCycle,
+        'fCycle': fCycle,
     })
 
 
