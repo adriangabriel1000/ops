@@ -31,6 +31,10 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
     # --------------- End Calculate Shift Cycle
+    # --------------- Retrieve FTM Values 
+    ftms = fire('A')
+    print(ftms)
+    # --------------- End Retrieve FTM Values 
 
     return render(request, 'manplan/manplan.html', {
         'counter': range(49),
@@ -48,6 +52,7 @@ def index(request):
         'dCycle': dCycle,
         'eCycle': eCycle,
         'fCycle': fCycle,
+        'aftms': ftms('A'),
     })
 
 
@@ -58,7 +63,7 @@ def index(request):
 # Populate Employee Model with Random Characters
 def pop():
     employee = Employee.objects.all()
-    schedule = Schedule.objects.all()
+    # schedule = Schedule.objects.all()
     for x in range(1, 30):
         name = ''.join(random.choices(string.ascii_letters, k=random.randint(6, 10)))
         surname = ''.join(random.choices(string.ascii_letters, k=random.randint(7, 15)))
@@ -73,8 +78,8 @@ def plan(shft, dlist):
     aTemp = []
     aEmpCount = {}
     aList = {}
-    for emp in Employee.objects.filter(shift=shft):
-        aEmpCount.update({emp.name: Schedule.objects.filter(employee__name__contains=emp).count()})
+    # for emp in Employee.objects.filter(shift=shft):
+    #     aEmpCount.update({emp.name: Schedule.objects.filter(employee__name__contains=emp).count()})
 
     for emp in Employee.objects.filter(shift=shft):
         tempEmp = {}
@@ -92,3 +97,13 @@ def plan(shft, dlist):
         aList.update({emp: aTemp}) 
         aTemp=[]    
     return aList
+
+def fire(shft):
+    ftms = Employee.objects.filter(shift=shft)
+    ftmArray = []
+    for ftm in ftms:
+        if ftm:
+            ftmArray.append(ftm.ftm)
+        else:
+            ftmArray.append(' ')
+    return ftmArray

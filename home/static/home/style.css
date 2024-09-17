@@ -18,3 +18,35 @@ h5 {
 #manPlan {
     font-size: 10px;
 }
+
+#M {
+    background-color: #89CFF0;
+    color: black;
+}
+
+#A {
+    background-color: Yellow;
+    color: black;
+}
+
+#T {
+    background-color: orange;
+    color: black;
+}
+
+#S {
+    background-color: red;
+    color: black;
+}
+
+#N {
+    background-color: black;
+    color: white;
+}
+
+#uname {
+    font-size: 10px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: black;
+}

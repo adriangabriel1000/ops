@@ -16,18 +16,22 @@
         </thead>
         <tbody>
             <!----------A Shift---------->
-            <tr class="table-dark" style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>A-Shift</th>
                 <th></th>
                 {% for val in aCycle %}
-                    <th>{{ val }}</th>
+                    {% if val %}
+                        <th id="{{val}}">{{ val }}</th>
+                    {% else %}
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for key, value in aList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{val}}</td>
@@ -36,18 +40,22 @@
             {% endfor %}
 
             <!----------B Shift---------->
-            <tr style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>B-Shift</th>
                 <th></th>
                 {% for val in bCycle %}
-                    <th>{{ val }}</th>
+                    {% if val %}
+                        <th id="{{val}}">{{ val }}</th>
+                    {% else %}
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for key, value in bList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{ val }}</td>
@@ -56,18 +64,22 @@
             {% endfor %}
 
             <!----------C Shift---------->
-            <tr style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>C-Shift</th>
                 <th></th>
                 {% for val in cCycle %}
-                    <th>{{ val }}</th>
+                    {% if val %}
+                        <th id="{{val}}">{{ val }}</th>
+                    {% else %}
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for key, value in cList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{ val }}</td>
@@ -76,18 +88,22 @@
             {% endfor %}
 
             <!----------D Shift---------->
-            <tr style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>D-Shift</th>
                 <th></th>
                 {% for val in dCycle %}
-                    <th>{{ val }}</th>
+                    {% if val %}
+                        <th id="{{val}}">{{ val }}</th>
+                    {% else %}
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for key, value in dList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{ val }}</td>
@@ -96,18 +112,22 @@
             {% endfor %}
 
             <!----------E Shift---------->
-            <tr style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>E-Shift</th>
                 <th></th>
                 {% for val in eCycle %}
-                    <th>{{ val }}</th>
+                    {% if val %}
+                        <th id="{{val}}">{{ val }}</th>
+                    {% else %}
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for key, value in eList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{ val }}</td>
@@ -116,18 +136,22 @@
             {% endfor %}
 
             <!----------F Shift---------->
-            <tr style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>F-Shift</th>
                 <th></th>
                 {% for val in fCycle %}
-                    <th>{{ val }}</th>
+                    {% if val %}
+                        <th id="{{val}}">{{ val }}</th>
+                    {% else %}
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% for key, value in fList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{ val }}</td>
@@ -136,7 +160,7 @@
             {% endfor %}
 
             <!----------O Shift---------->
-            <tr style="position: sticky; top: 98px; z-index: 1;">
+            <tr class="table-primary" style="position: sticky; top: 98px; z-index: 1;">
                 <th></th>
                 <th>O-Shift</th>
                 <th></th>
@@ -147,7 +171,7 @@
             {% for key, value in oList.items %}
             <tr>
                 <th scope="row">{{ forloop.counter }}</th>
-                <td class="text-nowrap">{{ key }}</td>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
                 <td>FTL</td>
                 {% for val in value %}
                     <td>{{ val }}</td>
