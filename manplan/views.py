@@ -6,7 +6,6 @@ import random
 import math
 from datetime import datetime, timedelta
 
-
 # Create your views here.
 def index(request):
     dateList = []
@@ -21,6 +20,7 @@ def index(request):
     eCycle = []
     fCycle = []
     ref = 0
+
     for date in dateList:
         finalMNTH = date - datetime(2024,1,1,12,0,0).date() 
         ref = finalMNTH.days - (math.trunc(finalMNTH.days / 42) * 42) + 3
@@ -31,10 +31,6 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
     # --------------- End Calculate Shift Cycle
-    # --------------- Retrieve FTM Values 
-    ftms = fire('A')
-    print(ftms)
-    # --------------- End Retrieve FTM Values 
 
     return render(request, 'manplan/manplan.html', {
         'counter': range(49),
@@ -52,13 +48,7 @@ def index(request):
         'dCycle': dCycle,
         'eCycle': eCycle,
         'fCycle': fCycle,
-        'aftms': ftms('A'),
     })
-
-
-
-
-
 
 # Populate Employee Model with Random Characters
 def pop():
@@ -73,13 +63,10 @@ def pop():
 
     return employee
 
-
+# Populate the rest of the table
 def plan(shft, dlist):
     aTemp = []
-    aEmpCount = {}
     aList = {}
-    # for emp in Employee.objects.filter(shift=shft):
-    #     aEmpCount.update({emp.name: Schedule.objects.filter(employee__name__contains=emp).count()})
 
     for emp in Employee.objects.filter(shift=shft):
         tempEmp = {}
@@ -88,22 +75,14 @@ def plan(shft, dlist):
         for tem in tempEmp:
             empTemp.update({tem.date.date(): tem.position})
 
+        aTemp.append(emp.ftm)
+
         for date in dlist:
             if date in empTemp:
                 aTemp.append(empTemp[date])
             else:
                 aTemp.append(' ')
-    
-        aList.update({emp: aTemp}) 
+        aList.update({emp: aTemp})
         aTemp=[]    
     return aList
 
-def fire(shft):
-    ftms = Employee.objects.filter(shift=shft)
-    ftmArray = []
-    for ftm in ftms:
-        if ftm:
-            ftmArray.append(ftm.ftm)
-        else:
-            ftmArray.append(' ')
-    return ftmArray

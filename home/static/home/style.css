@@ -44,9 +44,10 @@ h5 {
     color: white;
 }
 
-#uname {
+#uname, #FTM, #FTL {
     font-size: 10px;
     font-weight: bold;
     font-family: Verdana;
     color: black;
+    background-color: #e6f2ff;
 }

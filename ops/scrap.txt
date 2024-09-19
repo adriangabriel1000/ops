@@ -1,0 +1,14 @@
+{% for key, value in aList.items %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td class="text-nowrap" id="uname">{{ key }}</td>
+                {% for ftm in aftms %}
+                    {% if forloop.counter == forloop.parentloop.counter %}
+                        <td>{{ ftm }}</td>
+                    {% endif %}
+                {% endfor %}
+                {% for val in value %}
+                    <td>{{val}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
