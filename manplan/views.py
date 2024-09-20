@@ -9,8 +9,14 @@ from datetime import datetime, timedelta
 # Create your views here.
 def index(request):
     dateList = []
+    counter = {}
+    cnt = 0
     for x in range(-7,42):
         dateList.append(datetime.today().date() + timedelta(x))
+        if (datetime.today().date() + timedelta(x)).day == 1 or x == 41:
+            counter.update({((datetime.today().date() + timedelta(x-1)).strftime('%B')): cnt})
+            cnt = 1
+        cnt += 1
 
     # --------------- Calculate Shift Cycle
     aCycle = []
@@ -33,7 +39,7 @@ def index(request):
     # --------------- End Calculate Shift Cycle
 
     return render(request, 'manplan/manplan.html', {
-        'counter': range(49),
+        'counter': counter,
         'dateList': dateList,
         'aList': plan('A', dateList),
         'bList': plan('B', dateList),
@@ -53,7 +59,6 @@ def index(request):
 # Populate Employee Model with Random Characters
 def pop():
     employee = Employee.objects.all()
-    # schedule = Schedule.objects.all()
     for x in range(1, 30):
         name = ''.join(random.choices(string.ascii_letters, k=random.randint(6, 10)))
         surname = ''.join(random.choices(string.ascii_letters, k=random.randint(7, 15)))
