@@ -4,18 +4,21 @@ from cycle.models import Cycle
 import string
 import random
 import math
+import calendar
 from datetime import datetime, timedelta
 
 # Create your views here.
 def index(request):
     dateList = []
     counter = {}
-    cnt = 0
+    cnt = 1
     for x in range(-7,42):
         dateList.append(datetime.today().date() + timedelta(x))
-        if (datetime.today().date() + timedelta(x)).day == 1 or x == 41:
-            counter.update({((datetime.today().date() + timedelta(x-1)).strftime('%B')): cnt})
-            cnt = 1
+        daysmnth = calendar.monthrange((datetime.today().date() + timedelta(x)).year, (datetime.today().date() + timedelta(x)).month)[1]
+        if (datetime.today().date() + timedelta(x)).day == daysmnth or x == 41:
+            counter.update({((datetime.today().date() + timedelta(x)).strftime('%B')): cnt})
+            cnt = 0
+        
         cnt += 1
 
     # --------------- Calculate Shift Cycle
