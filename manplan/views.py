@@ -17,8 +17,7 @@ def index(request):
         daysmnth = calendar.monthrange((datetime.today().date() + timedelta(x)).year, (datetime.today().date() + timedelta(x)).month)[1]
         if (datetime.today().date() + timedelta(x)).day == daysmnth or x == 41:
             counter.update({((datetime.today().date() + timedelta(x)).strftime('%B')): cnt})
-            cnt = 0
-        
+            cnt = 0      
         cnt += 1
 
     # --------------- Calculate Shift Cycle
@@ -40,6 +39,7 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
     # --------------- End Calculate Shift Cycle
+    popRemainder(plan('A', dateList), aCycle, dateList)
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
@@ -94,3 +94,11 @@ def plan(shft, dlist):
         aTemp=[]    
     return aList
 
+def popRemainder(pos, shft, date):
+
+    for p in pos.values():
+        print(p)
+
+    # print('Position - ' + str(pos.values()) + '\n')
+    # print('shift - ' + str(shft))
+    # print('date - ' + str(date))
