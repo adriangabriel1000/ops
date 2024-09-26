@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import *
 from cycle.models import Cycle
+from datetime import datetime, timedelta
 import string
 import random
 import math
 import calendar
-from datetime import datetime, timedelta
+import random
+
 
 # Create your views here.
 def index(request):
@@ -40,6 +42,7 @@ def index(request):
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
     # --------------- End Calculate Shift Cycle
     popRemainder(plan('A', dateList), aCycle, dateList)
+
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
@@ -94,11 +97,34 @@ def plan(shft, dlist):
         aTemp=[]    
     return aList
 
+# Populate the Entire Manplan
 def popRemainder(pos, shft, date):
 
     for p in pos.values():
-        print(p)
+        print(p[10])
 
-    # print('Position - ' + str(pos.values()) + '\n')
-    # print('shift - ' + str(shft))
-    # print('date - ' + str(date))
+
+# Populate Random Positions on Manplan
+def randPos():
+    for x in range(1,100):
+        if (datetime.today().date() + timedelta(-7)).day > (datetime.today().date() + timedelta(41)).day:
+            rndDay = random.randint((datetime.today().date() + timedelta(42)).day, (datetime.today().date() + timedelta(-7)).day)
+        else:
+            rndDay = random.randint((datetime.today().date() + timedelta(-7)).day, (datetime.today().date() + timedelta(41)).day)
+
+        if (datetime.today().date() + timedelta(-7)).month > (datetime.today().date() + timedelta(41)).month:
+            rndMnth = random.randint((datetime.today().date() + timedelta(41)).month, (datetime.today().date() + timedelta(-7)).month)
+        else:
+            rndMnth = random.randint((datetime.today().date() + timedelta(-7)).month, (datetime.today().date() + timedelta(41)).month)
+
+        rndYr = 2024
+
+        posi = ['T1M', 'N1M', '0M', 'SNM', 'T1A', 'N1A', '0A', 'SNA', 'T1N', 'N1N', '0N', 'SNN']
+        rndPos = random.choice(posi)
+
+        nms = []
+        for a in Employee.objects.all():
+            nms.append(a.pk)
+        rndNme = random.choice(nms)
+
+        Schedule.objects.create(date=datetime(rndYr, rndMnth, rndDay, 12, 0, 0), position=rndPos, employee_id=rndNme)
