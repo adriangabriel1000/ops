@@ -41,8 +41,9 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
     # --------------- End Calculate Shift Cycle
-    popRemainder(plan('A', dateList), aCycle, dateList)
-
+    # popRemainder(plan('A', dateList), aCycle, dateList)
+    # randPos()
+    expandedManplan('A', dateList)
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
@@ -62,17 +63,7 @@ def index(request):
         'fCycle': fCycle,
     })
 
-# Populate Employee Model with Random Characters
-def pop():
-    employee = Employee.objects.all()
-    for x in range(1, 30):
-        name = ''.join(random.choices(string.ascii_letters, k=random.randint(6, 10)))
-        surname = ''.join(random.choices(string.ascii_letters, k=random.randint(7, 15)))
-        fullname = name + ' ' + surname
-        Employee.objects.create(name=fullname, shift='O')
-        print(fullname)
 
-    return employee
 
 # Populate the rest of the table
 def plan(shft, dlist):
@@ -97,34 +88,107 @@ def plan(shft, dlist):
         aTemp=[]    
     return aList
 
-# Populate the Entire Manplan
+# Populate the Entire Manplan ---------------- Incomplete
 def popRemainder(pos, shft, date):
 
+    y=0
     for p in pos.values():
-        print(p[10])
+        # print(p[10])
+        y += 1
+        doneList = [] 
+       
+        for x in p:
+            doneList.append(x)
+            # print(x)
+
+        if y == 1:
+            break  
+    y=0 
+    addPos = " "
+    for pos in doneList:
+        if y > 0:
+            if pos != " ":
+                addPos = pos
+            else:
+                doneList[y] = addPos
+        y += 1
+
+    print(doneList)
 
 
-# Populate Random Positions on Manplan
+
+
+
+def expandedManplan(shift, dateList):
+    empPos = []
+    finalList = {}
+
+    for emp in Employee.objects.filter(shift=shift):
+        shftEmp = {}
+        getEmp = {}
+        shftEmp = Schedule.objects.filter(employee=emp)
+        for tem in shftEmp:
+            getEmp.update({tem.date.date(): tem.position})
+
+        empPos.append(emp.ftm)
+
+        for date in dateList:
+            if date in getEmp:
+                empPos.append(getEmp[date])
+            else:
+                empPos.append(' ')
+        finalList.update({emp: empPos})
+        empPos=[]  
+
+
+    b=0
+    for emp in Employee.objects.filter(shift=shift):
+        shftEmp = Schedule.objects.filter(employee=emp)
+        for emp in shftEmp:
+            # while True:
+            #     if (dateList[0] + timedelta (b)) == emp.date.date():
+            #         print('found')
+            #         break
+            #     else:
+            #         b -= 1
+            
+            #     print(emp.date.date())
+            print(str(emp.position) + ' - ' + str(emp.date.date()) + ' - ' + str(dateList[0]))
+        break
+    
+    # print(dateList[7] - timedelta(42))  
+    # return aList
+
+
+
+
+
+
+
+# Populate Employee Model with Random Characters  ---------------- Run when required
+def pop():
+    employee = Employee.objects.all()
+    for x in range(1, 30):
+        name = ''.join(random.choices(string.ascii_letters, k=random.randint(6, 10)))
+        surname = ''.join(random.choices(string.ascii_letters, k=random.randint(7, 15)))
+        fullname = name + ' ' + surname
+        Employee.objects.create(name=fullname, shift='O')
+        print(fullname)
+    return employee
+
+
+# Populate Random Positions on Manplan ---------------- Run when required
 def randPos():
     for x in range(1,100):
-        if (datetime.today().date() + timedelta(-7)).day > (datetime.today().date() + timedelta(41)).day:
-            rndDay = random.randint((datetime.today().date() + timedelta(42)).day, (datetime.today().date() + timedelta(-7)).day)
-        else:
-            rndDay = random.randint((datetime.today().date() + timedelta(-7)).day, (datetime.today().date() + timedelta(41)).day)
-
-        if (datetime.today().date() + timedelta(-7)).month > (datetime.today().date() + timedelta(41)).month:
-            rndMnth = random.randint((datetime.today().date() + timedelta(41)).month, (datetime.today().date() + timedelta(-7)).month)
-        else:
-            rndMnth = random.randint((datetime.today().date() + timedelta(-7)).month, (datetime.today().date() + timedelta(41)).month)
-
+        rndDt = random.randint(-7, 41)
+        rndDay = (datetime.today().date() + timedelta(rndDt)).day
+        rndMnth = (datetime.today().date() + timedelta(rndDt)).month
         rndYr = 2024
-
+        rndDate = datetime(rndYr, rndMnth, rndDay, 12, 0, 0)
         posi = ['T1M', 'N1M', '0M', 'SNM', 'T1A', 'N1A', '0A', 'SNA', 'T1N', 'N1N', '0N', 'SNN']
         rndPos = random.choice(posi)
-
         nms = []
         for a in Employee.objects.all():
             nms.append(a.pk)
         rndNme = random.choice(nms)
-
-        Schedule.objects.create(date=datetime(rndYr, rndMnth, rndDay, 12, 0, 0), position=rndPos, employee_id=rndNme)
+        Schedule.objects.create(date=rndDate, position=rndPos, employee_id=rndNme)
