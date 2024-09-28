@@ -140,20 +140,28 @@ def expandedManplan(shift, dateList):
         finalList.update({emp: empPos})
         empPos=[]  
 
-
-    b=0
+    
     for emp in Employee.objects.filter(shift=shift):
         shftEmp = Schedule.objects.filter(employee=emp)
-        for emp in shftEmp:
-            # while True:
-            #     if (dateList[0] + timedelta (b)) == emp.date.date():
-            #         print('found')
-            #         break
-            #     else:
-            #         b -= 1
-            
-            #     print(emp.date.date())
-            print(str(emp.position) + ' - ' + str(emp.date.date()) + ' - ' + str(dateList[0]))
+        for emp in reversed(shftEmp):
+            for t in range(0, -42, -1):
+                if (dateList[0] + timedelta(t)) == emp.date.date():
+                    tmpPos = emp.position
+                    tmpDt = dateList[0] + timedelta(t)                    
+                    break
+                else:
+                    tmpPos = ""
+                    tmpDt = ""
+                    
+            print(tmpPos)
+            print(tmpDt)
+
+
+
+        
+            # print(b)
+            # print(str(emp.position) + ' - ' + str(emp.date.date()) + ' - ' + str(dateList[0]))
+            break
         break
     
     # print(dateList[7] - timedelta(42))  
