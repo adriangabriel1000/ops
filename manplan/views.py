@@ -48,13 +48,13 @@ def index(request):
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
         'dateList': dateList,
-        'aList': plan('A', dateList),
-        'bList': plan('B', dateList),
-        'cList': plan('C', dateList),
-        'dList': plan('D', dateList),
-        'eList': plan('E', dateList),
-        'fList': plan('F', dateList),
-        'oList': plan('O', dateList),
+        'aList': expandedManplan('A', dateList, aCycle),
+        'bList': expandedManplan('B', dateList, bCycle),
+        'cList': expandedManplan('C', dateList, cCycle),
+        'dList': expandedManplan('D', dateList, dCycle),
+        'eList': expandedManplan('E', dateList, eCycle),
+        'fList': expandedManplan('F', dateList, fCycle),
+        'oList': expandedManplan('O', dateList),
         'aCycle': aCycle,
         'bCycle': bCycle,
         'cCycle': cCycle,
@@ -119,53 +119,56 @@ def popRemainder(pos, shft, date):
 
 
 
-def expandedManplan(shift, dateList):
+def expandedManplan(shift, dateList, cycle=None):
     empPos = []
     finalList = {}
-
+    # print(cycle)
     for emp in Employee.objects.filter(shift=shift):
         shftEmp = {}
         getEmp = {}
+        tmpPos = ""
+        # tmpDt = ""
         shftEmp = Schedule.objects.filter(employee=emp)
+        for empl in reversed(shftEmp):
+            if (dateList[0]) == empl.date.date():
+                tmpPos = empl.position
+                tmpDt = dateList[0]
+            else:
+                for t in range(0, -42, -1):
+                    if (dateList[0] + timedelta(t)) == empl.date.date():
+                        tmpPos = empl.position
+                        # tmpDt = dateList[0] + timedelta(t)                    
+                        break
+                    else:
+                        tmpPos = ""
+                        
         for tem in shftEmp:
             getEmp.update({tem.date.date(): tem.position})
 
-        empPos.append(emp.ftm)
+        empPos.append(emp.ftm)    
 
         for date in dateList:
             if date in getEmp:
                 empPos.append(getEmp[date])
+                tmpPos = getEmp[date]
             else:
-                empPos.append(' ')
+                empPos.append(tmpPos)
+
+
+
+        # if cycle is not None:
+        #     for i in range(0, 49):
+        #         print(cycle[i])
+        #         print(empPos[i+1])
+        #     # print(cycle)
+        # break
+
+
+
+
         finalList.update({emp: empPos})
         empPos=[]  
-
-    
-    for emp in Employee.objects.filter(shift=shift):
-        shftEmp = Schedule.objects.filter(employee=emp)
-        for emp in reversed(shftEmp):
-            for t in range(0, -42, -1):
-                if (dateList[0] + timedelta(t)) == emp.date.date():
-                    tmpPos = emp.position
-                    tmpDt = dateList[0] + timedelta(t)                    
-                    break
-                else:
-                    tmpPos = ""
-                    tmpDt = ""
-                    
-            print(tmpPos)
-            print(tmpDt)
-
-
-
-        
-            # print(b)
-            # print(str(emp.position) + ' - ' + str(emp.date.date()) + ' - ' + str(dateList[0]))
-            break
-        break
-    
-    # print(dateList[7] - timedelta(42))  
-    # return aList
+    return finalList
 
 
 
