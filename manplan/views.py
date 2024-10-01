@@ -47,6 +47,7 @@ def index(request):
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
+        'cnt': range(1,50),
         'dateList': dateList,
         'aList': expandedManplan('A', dateList, aCycle),
         'bList': expandedManplan('B', dateList, bCycle),
@@ -66,27 +67,27 @@ def index(request):
 
 
 # Populate the rest of the table
-def plan(shft, dlist):
-    aTemp = []
-    aList = {}
+# def plan(shft, dlist):
+#     aTemp = []
+#     aList = {}
 
-    for emp in Employee.objects.filter(shift=shft):
-        tempEmp = {}
-        empTemp = {}
-        tempEmp = Schedule.objects.filter(employee=emp)
-        for tem in tempEmp:
-            empTemp.update({tem.date.date(): tem.position})
+#     for emp in Employee.objects.filter(shift=shft):
+#         tempEmp = {}
+#         empTemp = {}
+#         tempEmp = Schedule.objects.filter(employee=emp)
+#         for tem in tempEmp:
+#             empTemp.update({tem.date.date(): tem.position})
 
-        aTemp.append(emp.ftm)
+#         aTemp.append(emp.ftm)
 
-        for date in dlist:
-            if date in empTemp:
-                aTemp.append(empTemp[date])
-            else:
-                aTemp.append(' ')
-        aList.update({emp: aTemp})
-        aTemp=[]    
-    return aList
+#         for date in dlist:
+#             if date in empTemp:
+#                 aTemp.append(empTemp[date])
+#             else:
+#                 aTemp.append(' ')
+#         aList.update({emp: aTemp})
+#         aTemp=[]    
+#     return aList
 
 # Populate the Entire Manplan ---------------- Incomplete
 def popRemainder(pos, shft, date):
@@ -122,25 +123,27 @@ def popRemainder(pos, shft, date):
 def expandedManplan(shift, dateList, cycle=None):
     empPos = []
     finalList = {}
-    # print(cycle)
+    positions = ['OJ', 'CO', 'PN', 'SN', '0', 'T1', 'T2', 'N1', 'N2', 'A1', 'A2', 'S1', 'S2', '1', '2', 'SM', 'X']
     for emp in Employee.objects.filter(shift=shift):
         shftEmp = {}
         getEmp = {}
         tmpPos = ""
         # tmpDt = ""
         shftEmp = Schedule.objects.filter(employee=emp)
-        for empl in reversed(shftEmp):
-            if (dateList[0]) == empl.date.date():
-                tmpPos = empl.position
-                tmpDt = dateList[0]
-            else:
-                for t in range(0, -42, -1):
-                    if (dateList[0] + timedelta(t)) == empl.date.date():
-                        tmpPos = empl.position
-                        # tmpDt = dateList[0] + timedelta(t)                    
-                        break
-                    else:
-                        tmpPos = ""
+
+        if shift != 'O':
+            for empl in reversed(shftEmp):
+                if (dateList[0]) == empl.date.date():
+                    tmpPos = empl.position
+                    # tmpDt = dateList[0]
+                else:
+                    for t in range(0, -42, -1):
+                        if (dateList[0] + timedelta(t)) == empl.date.date():
+                            tmpPos = empl.position
+                            # tmpDt = dateList[0] + timedelta(t)                    
+                            break
+                        else:
+                            tmpPos = ""
                         
         for tem in shftEmp:
             getEmp.update({tem.date.date(): tem.position})
@@ -150,21 +153,20 @@ def expandedManplan(shift, dateList, cycle=None):
         for date in dateList:
             if date in getEmp:
                 empPos.append(getEmp[date])
-                tmpPos = getEmp[date]
+                if shift != 'O':
+                    tmpPos = getEmp[date]
             else:
                 empPos.append(tmpPos)
 
-
-
-        # if cycle is not None:
-        #     for i in range(0, 49):
-        #         print(cycle[i])
-        #         print(empPos[i+1])
-        #     # print(cycle)
-        # break
-
-
-
+        if cycle is not None:
+            for i in range(0, 49):
+                if cycle[i] == "" or empPos[i+1] == "" or cycle[i] == "T" or cycle[i] == "S":
+                    empPos[i+1] = ""
+                else:
+                    if empPos[i+1][:-1] in positions:
+                        empPos[i+1] = empPos[i+1][:-1] + cycle[i]
+                    else:
+                        empPos[i+1] = empPos[i+1]
 
         finalList.update({emp: empPos})
         empPos=[]  
