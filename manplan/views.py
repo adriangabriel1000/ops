@@ -116,10 +116,6 @@ def popRemainder(pos, shft, date):
 
     print(doneList)
 
-
-
-
-
 def expandedManplan(shift, dateList, cycle=None):
     empPos = []
     finalList = {}
@@ -128,19 +124,17 @@ def expandedManplan(shift, dateList, cycle=None):
         shftEmp = {}
         getEmp = {}
         tmpPos = ""
-        # tmpDt = ""
+        actualPos = []
         shftEmp = Schedule.objects.filter(employee=emp)
 
         if shift != 'O':
             for empl in reversed(shftEmp):
                 if (dateList[0]) == empl.date.date():
                     tmpPos = empl.position
-                    # tmpDt = dateList[0]
                 else:
                     for t in range(0, -42, -1):
                         if (dateList[0] + timedelta(t)) == empl.date.date():
-                            tmpPos = empl.position
-                            # tmpDt = dateList[0] + timedelta(t)                    
+                            tmpPos = empl.position                
                             break
                         else:
                             tmpPos = ""
@@ -151,8 +145,21 @@ def expandedManplan(shift, dateList, cycle=None):
         empPos.append(emp.ftm)    
 
         for date in dateList:
+            for empl in shftEmp:
+                if date == empl.date.date():
+                    b=1
+                    break
+                else:
+                    b=0
+            if b == 1:
+                actualPos.append('1')
+            else:
+                actualPos.append('')
+
+        for date in dateList:
             if date in getEmp:
                 empPos.append(getEmp[date])
+
                 if shift != 'O':
                     tmpPos = getEmp[date]
             else:
@@ -160,13 +167,14 @@ def expandedManplan(shift, dateList, cycle=None):
 
         if cycle is not None:
             for i in range(0, 49):
-                if cycle[i] == "" or empPos[i+1] == "" or cycle[i] == "T" or cycle[i] == "S":
+                if (cycle[i] == '' and actualPos[i] == '') or empPos[i+1] == '' or cycle[i] == 'T' or cycle[i] == 'S':
                     empPos[i+1] = ""
                 else:
-                    if empPos[i+1][:-1] in positions:
-                        empPos[i+1] = empPos[i+1][:-1] + cycle[i]
-                    else:
-                        empPos[i+1] = empPos[i+1]
+                    if empPos[i+1] == "":
+                        if empPos[i+1][:-1] in positions:
+                            empPos[i+1] = empPos[i+1][:-1] + cycle[i]
+                        else:
+                            empPos[i+1] = empPos[i+1]
 
         finalList.update({emp: empPos})
         empPos=[]  
