@@ -11,15 +11,6 @@ import random
 
 # Create your views here.
 def index(request):
-
-    if request.method == 'POST':
-        cellAddress = request.body.decode("utf8").split(",")
-        cellRow = cellAddress[0]
-        cellCol = cellAddress[1]
-        cellPos = cellAddress[2]
-        print(cellRow, cellCol, cellPos)
-
-
     dateList = []
     counter = {}
     cnt = 1
@@ -49,10 +40,11 @@ def index(request):
         dCycle.append((Cycle.objects.filter(id=ref).values('dShift')[0]['dShift']))
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
-    # --------------- End Calculate Shift Cycle
-    # popRemainder(plan('A', dateList), aCycle, dateList)
-    # randPos()
-    # expandedManplan('A', dateList)
+
+    if request.method == 'POST':
+        cellAddress = request.body.decode("utf8").split(",")
+        if cellAddress[2] != 'null':
+            changePosition(cellAddress[0], cellAddress[1], cellAddress[2], dateList[int(cellAddress[1])-1])
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
@@ -72,6 +64,45 @@ def index(request):
         'eCycle': eCycle,
         'fCycle': fCycle,
     })
+
+
+
+def changePosition(cellRow, cellCol, cellPos, date):
+    aEmpl = Employee.objects.filter(shift='A')
+    bEmpl = Employee.objects.filter(shift='B')
+    cEmpl = Employee.objects.filter(shift='C')
+    dEmpl = Employee.objects.filter(shift='D')
+    eEmpl = Employee.objects.filter(shift='E')
+    fEmpl = Employee.objects.filter(shift='F')
+    oEmpl = Employee.objects.filter(shift='O')
+    empl = ''
+    # print(aEmpl[0])
+    # print(cellRow, cellCol, cellPos, date)
+
+    a = aEmpl.count()
+    b = bEmpl.count() + 1 + a
+    c = cEmpl.count() + 1 + b
+    d = dEmpl.count() + 1 + c
+    e = eEmpl.count() + 1 + d
+    f = fEmpl.count() + 1 + e
+    o = oEmpl.count() + 1 + f
+    if int(cellRow) > 0 and int(cellRow) <= a:
+        empl = aEmpl[int(cellRow)-1]
+    if int(cellRow) > a and int(cellRow) <= b:
+        empl = bEmpl[int(cellRow) - a - 2]
+    if int(cellRow) > b and int(cellRow) <= c:
+        empl = cEmpl[int(cellRow) - b - 2]
+    if int(cellRow) > c and int(cellRow) <= d:
+        empl = dEmpl[int(cellRow) - c - 2]
+    if int(cellRow) > d and int(cellRow) <= e:
+        empl = eEmpl[int(cellRow) - d - 2]
+    if int(cellRow) > e and int(cellRow) <= f:
+        empl = fEmpl[int(cellRow) - d - 2]
+    if int(cellRow) > f and int(cellRow) <= o:
+        empl = oEmpl[int(cellRow) - f - 2]
+    print(empl)
+    Schedule.objects.create(date=date, position=cellPos, employee=empl)
+    return redirect('/manplan/')
 
 
 

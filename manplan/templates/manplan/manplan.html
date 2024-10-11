@@ -231,16 +231,19 @@
 
     function cellAdd(x, y) {
         console.log(parseInt(x-2) + "," + parseInt(y-2));
-        let position = prompt("Enter Position:");
-        fetch('', {
-            method: 'POST',
-            headers: {
-                "X-CSRFToken": "{{csrf_token}}",
-                "Content-Type": "application/json",
-            },
-            body: (String(parseInt(x-2)) + "," + String(parseInt(y-2)) + "," + position)
-    })
-
+        console.log("Current Position: " + event.target.innerText)
+        if (parseInt(y-2)>0) {
+            let position = prompt("Enter Position:");
+            fetch('', {
+                method: 'POST',
+                headers: {
+                    "X-CSRFToken": "{{csrf_token}}",
+                    "Content-Type": "application/json",
+                },
+                body: (String(parseInt(x-2)) + "," + String(parseInt(y-2)) + "," + position)
+            })
+        }
+        location.reload()
     }
 
     // function rowNum(x) {
