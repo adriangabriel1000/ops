@@ -11,6 +11,15 @@ import random
 
 # Create your views here.
 def index(request):
+
+    if request.method == 'POST':
+        cellAddress = request.body.decode("utf8").split(",")
+        cellRow = cellAddress[0]
+        cellCol = cellAddress[1]
+        cellPos = cellAddress[2]
+        print(cellRow, cellCol, cellPos)
+
+
     dateList = []
     counter = {}
     cnt = 1
@@ -43,7 +52,7 @@ def index(request):
     # --------------- End Calculate Shift Cycle
     # popRemainder(plan('A', dateList), aCycle, dateList)
     # randPos()
-    expandedManplan('A', dateList)
+    # expandedManplan('A', dateList)
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,

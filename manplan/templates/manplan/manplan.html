@@ -1,9 +1,9 @@
 {% extends 'home/base.html' %}
 
 {% block body %}
-  
+
     <div style="">
-    <table class="table table-hover table-bordered rounded shadow-lg w-50 border border-white" id="manPlan">
+    <table class="table table-hover table-bordered rounded shadow-lg w-50 border border-white" id="manPlan"> <!--onclick="alert(event.target.innerText)"-->
         <thead style="position: sticky; top: 67px; z-index: 1;">
             <tr>
                 <th id="uname"></th>
@@ -37,14 +37,14 @@
                 {% endfor %}
             </tr>
             {% for key, value in aList.items %}
-            <tr>
+            <tr> <!--onclick="rowNum(this)"-->
                 <th scope="row" id="uname">{{ forloop.counter }}</th>
                 <td class="text-nowrap" id="uname">{{ key }}</td>
                 {% for val in value %}
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                        <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td> <!--onclick="colNum(this)"-->
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -220,5 +220,44 @@
         </tbody>
     </table>
 </div>
+<script>
+    const cells = document.querySelectorAll('td');
+    cells.forEach(cell => {
+    cell.addEventListener('click', () => 
+        // console.log("Row index: " + cell.closest('tr').rowIndex + " | Column index: " + cell.cellIndex);
+        cellAdd(cell.closest('tr').rowIndex, cell.cellIndex));
 
+    });
+
+    function cellAdd(x, y) {
+        console.log(parseInt(x-2) + "," + parseInt(y-2));
+        let position = prompt("Enter Position:");
+        fetch('', {
+            method: 'POST',
+            headers: {
+                "X-CSRFToken": "{{csrf_token}}",
+                "Content-Type": "application/json",
+            },
+            body: (String(parseInt(x-2)) + "," + String(parseInt(y-2)) + "," + position)
+    })
+
+    }
+
+    // function rowNum(x) {
+    //     console.log("Row Num is: " + parseInt(x.rowIndex - 2) );
+    // }
+
+    // function colNum(x) {
+    //     console.log("Col Num is: " + parseInt(x.cellIndex - 2));
+    // }
+
+
+</script>
+
+<!-- <script>
+    var table = document.getElementById("manPlan");
+    var cells = table.getElementsByTagName("td"); 
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].onclick = console.log('Click');};
+</script> -->
 {% endblock %}
