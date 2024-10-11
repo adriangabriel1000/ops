@@ -230,8 +230,8 @@
     });
 
     function cellAdd(x, y) {
-        console.log(parseInt(x-2) + "," + parseInt(y-2));
-        console.log("Current Position: " + event.target.innerText)
+        // console.log(parseInt(x-2) + "," + parseInt(y-2));
+        // console.log("Current Position: " + event.target.innerText)
         if (parseInt(y-2)>0) {
             let position = prompt("Enter Position:");
             fetch('', {
@@ -243,24 +243,8 @@
                 body: (String(parseInt(x-2)) + "," + String(parseInt(y-2)) + "," + position)
             })
         }
-        location.reload()
     }
-
-    // function rowNum(x) {
-    //     console.log("Row Num is: " + parseInt(x.rowIndex - 2) );
-    // }
-
-    // function colNum(x) {
-    //     console.log("Col Num is: " + parseInt(x.cellIndex - 2));
-    // }
-
 
 </script>
 
-<!-- <script>
-    var table = document.getElementById("manPlan");
-    var cells = table.getElementsByTagName("td"); 
-    for (var i = 0; i < cells.length; i++) {
-        cells[i].onclick = console.log('Click');};
-</script> -->
 {% endblock %}

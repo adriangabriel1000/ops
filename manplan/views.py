@@ -22,6 +22,13 @@ def index(request):
             cnt = 0      
         cnt += 1
 
+    # --------------- Update Positions
+    if request.method == 'POST':
+        cellAddress = request.body.decode("utf8").split(",")
+        if cellAddress[2] != 'null':
+            empl = changePosition(cellAddress[0], cellAddress[1], cellAddress[2], dateList[int(cellAddress[1])-1])
+            Schedule.objects.create(date=dateList[int(cellAddress[1])-1], position=cellAddress[2], employee=empl)
+
     # --------------- Calculate Shift Cycle
     aCycle = []
     bCycle = []
@@ -41,10 +48,7 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
 
-    if request.method == 'POST':
-        cellAddress = request.body.decode("utf8").split(",")
-        if cellAddress[2] != 'null':
-            changePosition(cellAddress[0], cellAddress[1], cellAddress[2], dateList[int(cellAddress[1])-1])
+
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
@@ -100,9 +104,9 @@ def changePosition(cellRow, cellCol, cellPos, date):
         empl = fEmpl[int(cellRow) - d - 2]
     if int(cellRow) > f and int(cellRow) <= o:
         empl = oEmpl[int(cellRow) - f - 2]
-    print(empl)
-    Schedule.objects.create(date=date, position=cellPos, employee=empl)
-    return redirect('/manplan/')
+
+    
+    return empl
 
 
 
