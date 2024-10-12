@@ -226,7 +226,7 @@
     cell.addEventListener('click', () => 
         // console.log("Row index: " + cell.closest('tr').rowIndex + " | Column index: " + cell.cellIndex);
         cellAdd(cell.closest('tr').rowIndex, cell.cellIndex));
-
+        
     });
 
     function cellAdd(x, y) {
@@ -242,6 +242,7 @@
                 },
                 body: (String(parseInt(x-2)) + "," + String(parseInt(y-2)) + "," + position)
             })
+            location.reload(true)
         }
     }
 

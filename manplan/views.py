@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
 from cycle.models import Cycle
 from datetime import datetime, timedelta
@@ -26,8 +28,9 @@ def index(request):
     if request.method == 'POST':
         cellAddress = request.body.decode("utf8").split(",")
         if cellAddress[2] != 'null':
-            empl = changePosition(cellAddress[0], cellAddress[1], cellAddress[2], dateList[int(cellAddress[1])-1])
-            Schedule.objects.create(date=dateList[int(cellAddress[1])-1], position=cellAddress[2], employee=empl)
+            empl = changePosition(cellAddress[0])
+            Schedule.objects.create(date=dateList[int(cellAddress[1])-1], position=cellAddress[2], employee=empl) # Resolve naive dateTime here
+            # print(str(dateList[int(cellAddress[1])-1]))
 
     # --------------- Calculate Shift Cycle
     aCycle = []
@@ -71,7 +74,7 @@ def index(request):
 
 
 
-def changePosition(cellRow, cellCol, cellPos, date):
+def changePosition(cellRow):
     aEmpl = Employee.objects.filter(shift='A')
     bEmpl = Employee.objects.filter(shift='B')
     cEmpl = Employee.objects.filter(shift='C')
@@ -80,8 +83,6 @@ def changePosition(cellRow, cellCol, cellPos, date):
     fEmpl = Employee.objects.filter(shift='F')
     oEmpl = Employee.objects.filter(shift='O')
     empl = ''
-    # print(aEmpl[0])
-    # print(cellRow, cellCol, cellPos, date)
 
     a = aEmpl.count()
     b = bEmpl.count() + 1 + a
@@ -104,8 +105,6 @@ def changePosition(cellRow, cellCol, cellPos, date):
         empl = fEmpl[int(cellRow) - d - 2]
     if int(cellRow) > f and int(cellRow) <= o:
         empl = oEmpl[int(cellRow) - f - 2]
-
-    
     return empl
 
 
@@ -134,31 +133,31 @@ def changePosition(cellRow, cellCol, cellPos, date):
 #     return aList
 
 # Populate the Entire Manplan ---------------- Incomplete
-def popRemainder(pos, shft, date):
+# def popRemainder(pos, shft, date):
 
-    y=0
-    for p in pos.values():
-        # print(p[10])
-        y += 1
-        doneList = [] 
+#     y=0
+#     for p in pos.values():
+#         # print(p[10])
+#         y += 1
+#         doneList = [] 
        
-        for x in p:
-            doneList.append(x)
-            # print(x)
+#         for x in p:
+#             doneList.append(x)
+#             # print(x)
 
-        if y == 1:
-            break  
-    y=0 
-    addPos = " "
-    for pos in doneList:
-        if y > 0:
-            if pos != " ":
-                addPos = pos
-            else:
-                doneList[y] = addPos
-        y += 1
+#         if y == 1:
+#             break  
+#     y=0 
+#     addPos = " "
+#     for pos in doneList:
+#         if y > 0:
+#             if pos != " ":
+#                 addPos = pos
+#             else:
+#                 doneList[y] = addPos
+#         y += 1
 
-    print(doneList)
+#     print(doneList)
 
 def expandedManplan(shift, dateList, cycle=None):
     empPos = []
@@ -211,7 +210,7 @@ def expandedManplan(shift, dateList, cycle=None):
 
         if cycle is not None:
             for i in range(0, 49):
-                if (cycle[i] == '' and actualPos[i] == '') or empPos[i+1] == '' or cycle[i] == 'T' or cycle[i] == 'S':
+                if (cycle[i] == '' or empPos[i+1] == '' or cycle[i] == 'T' or cycle[i] == 'S') and actualPos[i] == '':
                     empPos[i+1] = ""
                 else:
                     if empPos[i+1] == "":
