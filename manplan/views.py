@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.utils.timezone import utc
 from .models import *
 from cycle.models import Cycle
 from datetime import datetime, timedelta
@@ -29,8 +29,7 @@ def index(request):
         cellAddress = request.body.decode("utf8").split(",")
         if cellAddress[2] != 'null':
             empl = changePosition(cellAddress[0])
-            Schedule.objects.create(date=dateList[int(cellAddress[1])-1], position=cellAddress[2], employee=empl) # Resolve naive dateTime here
-            # print(str(dateList[int(cellAddress[1])-1]))
+            Schedule.objects.create(date=datetime.combine(dateList[int(cellAddress[1])-1], datetime.min.time()).replace(tzinfo=utc), position=cellAddress[2], employee=empl) 
 
     # --------------- Calculate Shift Cycle
     aCycle = []
