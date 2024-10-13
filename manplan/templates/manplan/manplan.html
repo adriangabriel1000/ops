@@ -6,33 +6,52 @@
     <table class="table table-hover table-bordered rounded shadow-lg w-50 border border-white" id="manPlan"> <!--onclick="alert(event.target.innerText)"-->
         <thead style="position: sticky; top: 67px; z-index: 1;">
             <tr>
-                <th id="uname"></th>
-                <th id="uname"></th>
-                <th id="uname"></th>
+                <th id="hname"></th>
+                <th id="hname" class="d-flex justify-content-center">
+                    <nav>
+                        <ul class="pagination pagination-sm mb-0">
+                            <li>
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-sm me-1" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                                    </svg>
+                                </button>
+                            </li>
+                            <li>
+                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-sm" type="submit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </th>
+                <th id="hname"></th>
                 {% for mnth, count in counter.items %}
-                     <th class="border border-primary border-2" colspan="{{count}}" style="text-align: center;" id="uname">{{mnth}}</th>
+                     <th colspan="{{count}}" style="text-align: center; font-size: 20px;" class="uppercase" id="hname">{{mnth}}</th>
                 {% endfor %}
             </tr>
             <tr>
-                <th scope="col" id="uname"></th>
-                <th scope="col" style="text-align: center;" id="uname">Name</th>
-                <th scope="col" id="uname"></th>
+                <th scope="col" id="hname"></th>
+                <th scope="col" style="text-align: center;" id="hname">Name</th>
+                <th scope="col" id="hname"></th>
                 {% for date in dateList %}
-                    <th scope="col" id="uname">{{date|date:"j"}}</th>
+                    <th scope="col" id="hname">{{date|date:"j"}}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             <!----------A Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">A-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">A-SHIFT</th>
+                <th id="heads"></th>
                 {% for val in aCycle %}
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #f2f2f2;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -44,7 +63,7 @@
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td> <!--onclick="colNum(this)"-->
+                        <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td> <!--onclick="colNum(this)"-->
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -52,14 +71,14 @@
 
             <!----------B Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">B-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">B-SHIFT</th>
+                <th id="heads"></th>
                 {% for val in bCycle %}
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #f2f2f2;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -71,7 +90,7 @@
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                        <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -79,14 +98,14 @@
 
             <!----------C Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">C-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">C-SHIFT</th>
+                <th id="heads"></th>
                 {% for val in cCycle %}
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #f2f2f2;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -98,7 +117,7 @@
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                        <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -106,14 +125,14 @@
 
             <!----------D Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">D-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">D-SHIFT</th>
+                <th id="heads"></th>
                 {% for val in dCycle %}
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #f2f2f2;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -125,7 +144,7 @@
                 {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
@@ -133,14 +152,14 @@
 
             <!----------E Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">E-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">E-SHIFT</th>
+                <th id="heads"></th>
                 {% for val in eCycle %}
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #f2f2f2;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -152,7 +171,7 @@
                 {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
@@ -160,14 +179,14 @@
 
             <!----------F Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">F-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">F-SHIFT</th>
+                <th id="heads"></th>
                 {% for val in fCycle %}
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #f2f2f2;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -179,7 +198,7 @@
                     {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
@@ -187,11 +206,11 @@
 
             <!----------O Shift---------->
             <tr style="position: sticky; top: 133px; z-index: 1; text-align: center;">
-                <th id="uname"></th>
-                <th id="uname">O-Shift</th>
-                <th id="uname"></th>
+                <th id="heads"></th>
+                <th id="heads">O-SHIFT</th>
+                <th id="heads"></th>
                 {% for i in cnt %}
-                    <th style="background-color: #f2f2f2;"> </th>
+                    <th style="background-color: #e9e9fa;"> </th>
                 {% endfor %}
             </tr>
             {% for key, value in oList.items %}
@@ -202,7 +221,7 @@
                 {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #f2f2f2; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>

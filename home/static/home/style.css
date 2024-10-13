@@ -44,10 +44,34 @@ h5 {
     color: white;
 }
 
+th.uppercase {
+    text-transform: uppercase;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Verdana;
+}
+
 #uname, #FTM, #FTL {
     font-size: 10px;
     font-weight: bold;
     font-family: Verdana;
-    color: black;
-    background-color: #d5dbdb;
+    color: white;
+    background-color: #202428;
 }
+
+#hname {
+    font-size: 10px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: white;
+    background-color: #212529;
+}
+
+#heads {
+    font-size: 10px;
+    font-weight: bold;
+    font-family: Verdana;
+    color: white;
+    background-color: #202428;
+}
+
