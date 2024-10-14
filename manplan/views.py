@@ -26,10 +26,18 @@ def index(request):
 
     # --------------- Update Positions
     if request.method == 'POST':
-        cellAddress = request.body.decode("utf8").split(",")
-        if cellAddress[2] != 'null':
-            empl = changePosition(cellAddress[0])
-            Schedule.objects.create(date=datetime.combine(dateList[int(cellAddress[1])-1], datetime.min.time()).replace(tzinfo=utc), position=cellAddress[2], employee=empl) 
+        if 'csrfmiddlewaretoken' not in str(request.body.decode("utf8")):
+            cellAddress = request.body.decode("utf8").split(",")
+            if cellAddress[2] != 'null':
+                empl = changePosition(cellAddress[0])
+                Schedule.objects.create(date=datetime.combine(dateList[int(cellAddress[1])-1], datetime.min.time()).replace(tzinfo=utc), position=cellAddress[2], employee=empl) 
+        
+        if request.POST.get("backward"):
+            print('Backward')
+
+        if request.POST.get("forward"):
+            print('Forward')
+
 
     # --------------- Calculate Shift Cycle
     aCycle = []
