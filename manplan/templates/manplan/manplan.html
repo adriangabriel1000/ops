@@ -40,7 +40,7 @@
                 <th scope="col" style="text-align: center;" id="hname">Name</th>
                 <th scope="col" id="hname"></th>
                 {% for date in dateList %}
-                    <th scope="col" id="hname">{{date|date:"j"}}</th>
+                    <th scope="col" id="hname" style="text-align: center;">{{date|date:"D d"}}</th>
                 {% endfor %}
             </tr>
         </thead>
