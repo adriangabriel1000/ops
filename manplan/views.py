@@ -4,6 +4,7 @@ from django.utils.timezone import utc
 from .models import *
 from cycle.models import Cycle
 from datetime import datetime, timedelta
+from django.core.paginator import Paginator
 import string
 import random
 import math
@@ -23,7 +24,7 @@ def index(request):
             counter.update({((datetime.today().date() + timedelta(x)).strftime('%B')): cnt})
             cnt = 0      
         cnt += 1
-
+    
     # --------------- Update Positions
     if request.method == 'POST':
         if 'csrfmiddlewaretoken' not in str(request.body.decode("utf8")):
@@ -37,6 +38,12 @@ def index(request):
 
         if request.POST.get("forward"):
             print('Forward')
+
+    tempList = dateList
+    paginator = Paginator(tempList, 4)
+    page = request.GET.get('page')
+    tempList = paginator.get_page(page)
+    print(page)
 
 
     # --------------- Calculate Shift Cycle
@@ -64,6 +71,7 @@ def index(request):
         'counter': counter,
         'cnt': range(1,50),
         'dateList': dateList,
+        'tempList': tempList,
         'aList': expandedManplan('A', dateList, aCycle),
         'bList': expandedManplan('B', dateList, bCycle),
         'cList': expandedManplan('C', dateList, cCycle),
