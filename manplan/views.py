@@ -17,13 +17,15 @@ def index(request):
     dateList = []
     counter = {}
     cnt = 1
-    for x in range(-7,42):
+    for x in range(-7,407):#range(-7,42):
         dateList.append(datetime.today().date() + timedelta(x))
         daysmnth = calendar.monthrange((datetime.today().date() + timedelta(x)).year, (datetime.today().date() + timedelta(x)).month)[1]
-        if (datetime.today().date() + timedelta(x)).day == daysmnth or x == 41:
+        # print(daysmnth)
+        if (datetime.today().date() + timedelta(x)).day == daysmnth:
             counter.update({((datetime.today().date() + timedelta(x)).strftime('%B')): cnt})
             cnt = 0      
         cnt += 1
+    # print(counter)
     
     # --------------- Update Positions
     if request.method == 'POST':
@@ -39,11 +41,14 @@ def index(request):
         if request.POST.get("forward"):
             print('Forward')
 
-    tempList = dateList
-    paginator = Paginator(tempList, 4)
+    
+    paginator = Paginator(dateList, 49)
     page = request.GET.get('page')
-    tempList = paginator.get_page(page)
-    print(page)
+    # print(dateList, page)
+    dateList = paginator.get_page(page)
+    counter = counterList(dateList, page)
+    
+    # print(page)
 
 
     # --------------- Calculate Shift Cycle
@@ -71,7 +76,7 @@ def index(request):
         'counter': counter,
         'cnt': range(1,50),
         'dateList': dateList,
-        'tempList': tempList,
+        # 'tempList': tempList,
         'aList': expandedManplan('A', dateList, aCycle),
         'bList': expandedManplan('B', dateList, bCycle),
         'cList': expandedManplan('C', dateList, cCycle),
@@ -87,6 +92,12 @@ def index(request):
         'fCycle': fCycle,
     })
 
+def counterList(dateList, page):
+    counter = {}
+    # for date in dateList:
+    counter.update({'October': 15, 'November': 30, 'December': 4})
+        # print(date, page)
+    return counter
 
 
 def changePosition(cellRow):
