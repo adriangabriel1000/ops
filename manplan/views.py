@@ -11,7 +11,6 @@ import math
 import calendar
 import random
 
-
 # Create your views here.
 def index(request):
     dateList = []
@@ -20,12 +19,10 @@ def index(request):
     for x in range(-7,407):#range(-7,42):
         dateList.append(datetime.today().date() + timedelta(x))
         daysmnth = calendar.monthrange((datetime.today().date() + timedelta(x)).year, (datetime.today().date() + timedelta(x)).month)[1]
-        # print(daysmnth)
         if (datetime.today().date() + timedelta(x)).day == daysmnth:
             counter.update({((datetime.today().date() + timedelta(x)).strftime('%B')): cnt})
             cnt = 0      
         cnt += 1
-    # print(counter)
     
     # --------------- Update Positions
     if request.method == 'POST':
@@ -41,15 +38,10 @@ def index(request):
         if request.POST.get("forward"):
             print('Forward')
 
-    
     paginator = Paginator(dateList, 49)
     page = request.GET.get('page')
-    # print(dateList, page)
     dateList = paginator.get_page(page)
-    counter = counterList(dateList, page)
-    
-    # print(page)
-
+    counter = counterList(dateList)
 
     # --------------- Calculate Shift Cycle
     aCycle = []
@@ -70,13 +62,10 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
 
-
-
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
         'cnt': range(1,50),
         'dateList': dateList,
-        # 'tempList': tempList,
         'aList': expandedManplan('A', dateList, aCycle),
         'bList': expandedManplan('B', dateList, bCycle),
         'cList': expandedManplan('C', dateList, cCycle),
@@ -92,11 +81,18 @@ def index(request):
         'fCycle': fCycle,
     })
 
-def counterList(dateList, page):
+
+def counterList(dateList):
     counter = {}
-    # for date in dateList:
-    counter.update({'October': 15, 'November': 30, 'December': 4})
-        # print(date, page)
+    count = 1
+    count2 = 0
+    for date in dateList:
+        count2 += 1
+        if calendar.monthrange(date.year, date.month)[1] == date.day or count2 == 49:
+            counter.update({date.strftime('%B'): count})
+            count = 1
+        else:
+            count += 1
     return counter
 
 
