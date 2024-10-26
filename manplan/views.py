@@ -10,6 +10,7 @@ import random
 import math
 import calendar
 import random
+# import manfuncs
 
 # Create your views here.
 def index(request):
@@ -42,6 +43,7 @@ def index(request):
     page = request.GET.get('page')
     dateList = paginator.get_page(page)
     counter = counterList(dateList)
+    
 
     # --------------- Calculate Shift Cycle
     aCycle = []
@@ -62,17 +64,19 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
 
+    aList = expandedManplan('A', dateList, aCycle)
+
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
         'cnt': range(1,50),
         'dateList': dateList,
-        'aList': expandedManplan('A', dateList, aCycle),
-        'bList': expandedManplan('B', dateList, bCycle),
-        'cList': expandedManplan('C', dateList, cCycle),
-        'dList': expandedManplan('D', dateList, dCycle),
-        'eList': expandedManplan('E', dateList, eCycle),
-        'fList': expandedManplan('F', dateList, fCycle),
-        'oList': expandedManplan('O', dateList),
+        'aList': aList,# expandedManplan('A', dateList, aCycle),
+        # 'bList': expandedManplan('B', dateList, bCycle),
+        # 'cList': expandedManplan('C', dateList, cCycle),
+        # 'dList': expandedManplan('D', dateList, dCycle),
+        # 'eList': expandedManplan('E', dateList, eCycle),
+        # 'fList': expandedManplan('F', dateList, fCycle),
+        # 'oList': expandedManplan('O', dateList),
         'aCycle': aCycle,
         'bCycle': bCycle,
         'cCycle': cCycle,
@@ -131,55 +135,7 @@ def changePosition(cellRow):
 
 
 
-# Populate the rest of the table
-# def plan(shft, dlist):
-#     aTemp = []
-#     aList = {}
 
-#     for emp in Employee.objects.filter(shift=shft):
-#         tempEmp = {}
-#         empTemp = {}
-#         tempEmp = Schedule.objects.filter(employee=emp)
-#         for tem in tempEmp:
-#             empTemp.update({tem.date.date(): tem.position})
-
-#         aTemp.append(emp.ftm)
-
-#         for date in dlist:
-#             if date in empTemp:
-#                 aTemp.append(empTemp[date])
-#             else:
-#                 aTemp.append(' ')
-#         aList.update({emp: aTemp})
-#         aTemp=[]    
-#     return aList
-
-# Populate the Entire Manplan ---------------- Incomplete
-# def popRemainder(pos, shft, date):
-
-#     y=0
-#     for p in pos.values():
-#         # print(p[10])
-#         y += 1
-#         doneList = [] 
-       
-#         for x in p:
-#             doneList.append(x)
-#             # print(x)
-
-#         if y == 1:
-#             break  
-#     y=0 
-#     addPos = " "
-#     for pos in doneList:
-#         if y > 0:
-#             if pos != " ":
-#                 addPos = pos
-#             else:
-#                 doneList[y] = addPos
-#         y += 1
-
-#     print(doneList)
 
 def expandedManplan(shift, dateList, cycle=None):
     empPos = []
@@ -208,8 +164,10 @@ def expandedManplan(shift, dateList, cycle=None):
             getEmp.update({tem.date.date(): tem.position})
 
         empPos.append(emp.ftm)    
+        
 
         for date in dateList:
+            # print(date)
             for empl in shftEmp:
                 if date == empl.date.date():
                     b=1
@@ -230,14 +188,20 @@ def expandedManplan(shift, dateList, cycle=None):
             else:
                 empPos.append(tmpPos)
 
+        # print(actualPos)
+
         if cycle is not None:
             for i in range(0, 49):
                 if (cycle[i] == '' or empPos[i+1] == '' or cycle[i] == 'T' or cycle[i] == 'S') and actualPos[i] == '':
                     empPos[i+1] = ""
+                    # print('a')
                 else:
                     if empPos[i+1] == "":
+                        print('x')
+                        print(empPos[i+1][:-1])
                         if empPos[i+1][:-1] in positions:
                             empPos[i+1] = empPos[i+1][:-1] + cycle[i]
+                            print('y')
                         else:
                             empPos[i+1] = empPos[i+1]
 
@@ -251,30 +215,4 @@ def expandedManplan(shift, dateList, cycle=None):
 
 
 
-# Populate Employee Model with Random Characters  ---------------- Run when required
-def pop():
-    employee = Employee.objects.all()
-    for x in range(1, 30):
-        name = ''.join(random.choices(string.ascii_letters, k=random.randint(6, 10)))
-        surname = ''.join(random.choices(string.ascii_letters, k=random.randint(7, 15)))
-        fullname = name + ' ' + surname
-        Employee.objects.create(name=fullname, shift='O')
-        print(fullname)
-    return employee
 
-
-# Populate Random Positions on Manplan ---------------- Run when required
-def randPos():
-    for x in range(1,100):
-        rndDt = random.randint(-7, 41)
-        rndDay = (datetime.today().date() + timedelta(rndDt)).day
-        rndMnth = (datetime.today().date() + timedelta(rndDt)).month
-        rndYr = 2024
-        rndDate = datetime(rndYr, rndMnth, rndDay, 12, 0, 0)
-        posi = ['T1M', 'N1M', '0M', 'SNM', 'T1A', 'N1A', '0A', 'SNA', 'T1N', 'N1N', '0N', 'SNN']
-        rndPos = random.choice(posi)
-        nms = []
-        for a in Employee.objects.all():
-            nms.append(a.pk)
-        rndNme = random.choice(nms)
-        Schedule.objects.create(date=rndDate, position=rndPos, employee_id=rndNme)
