@@ -43,7 +43,7 @@ def index(request):
     page = request.GET.get('page')
     dateList = paginator.get_page(page)
     counter = counterList(dateList)
-    
+    # print(dateList.object_list)
 
     # --------------- Calculate Shift Cycle
     aCycle = []
@@ -64,19 +64,19 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
 
-    aList = expandedManplan('A', dateList, aCycle)
+    # aList = expandedManplan('A', dateList, aCycle)
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
         'cnt': range(1,50),
         'dateList': dateList,
-        'aList': aList,# expandedManplan('A', dateList, aCycle),
-        # 'bList': expandedManplan('B', dateList, bCycle),
-        # 'cList': expandedManplan('C', dateList, cCycle),
-        # 'dList': expandedManplan('D', dateList, dCycle),
-        # 'eList': expandedManplan('E', dateList, eCycle),
-        # 'fList': expandedManplan('F', dateList, fCycle),
-        # 'oList': expandedManplan('O', dateList),
+        'aList': expandedManplan('A', dateList, aCycle),
+        'bList': expandedManplan('B', dateList, bCycle),
+        'cList': expandedManplan('C', dateList, cCycle),
+        'dList': expandedManplan('D', dateList, dCycle),
+        'eList': expandedManplan('E', dateList, eCycle),
+        'fList': expandedManplan('F', dateList, fCycle),
+        'oList': expandedManplan('O', dateList),
         'aCycle': aCycle,
         'bCycle': bCycle,
         'cCycle': cCycle,
@@ -138,6 +138,9 @@ def changePosition(cellRow):
 
 
 def expandedManplan(shift, dateList, cycle=None):
+    # print(dateList)
+    # print(cycle)
+    # print(shift)
     empPos = []
     finalList = {}
     positions = ['OJ', 'CO', 'PN', 'SN', '0', 'T1', 'T2', 'N1', 'N2', 'A1', 'A2', 'S1', 'S2', '1', '2', 'SM', 'X']
@@ -164,13 +167,14 @@ def expandedManplan(shift, dateList, cycle=None):
             getEmp.update({tem.date.date(): tem.position})
 
         empPos.append(emp.ftm)    
-        
+        # print(getEmp)
 
         for date in dateList:
             # print(date)
             for empl in shftEmp:
                 if date == empl.date.date():
                     b=1
+                    # print(empl.date.date())
                     break
                 else:
                     b=0
@@ -182,29 +186,29 @@ def expandedManplan(shift, dateList, cycle=None):
         for date in dateList:
             if date in getEmp:
                 empPos.append(getEmp[date])
-
+                # print(getEmp[date])
                 if shift != 'O':
                     tmpPos = getEmp[date]
             else:
                 empPos.append(tmpPos)
 
-        # print(actualPos)
+        # print(empPos)
 
         if cycle is not None:
             for i in range(0, 49):
+                # print(cycle[i])
+                # print(empPos[i+1])
                 if (cycle[i] == '' or empPos[i+1] == '' or cycle[i] == 'T' or cycle[i] == 'S') and actualPos[i] == '':
                     empPos[i+1] = ""
-                    # print('a')
+                    # print(empPos[i+1])
                 else:
-                    if empPos[i+1] == "":
-                        print('x')
-                        print(empPos[i+1][:-1])
-                        if empPos[i+1][:-1] in positions:
-                            empPos[i+1] = empPos[i+1][:-1] + cycle[i]
-                            print('y')
-                        else:
-                            empPos[i+1] = empPos[i+1]
-
+                    # if empPos[i+1] == '':
+                    if empPos[i+1][:-1] in positions:
+                        empPos[i+1] = empPos[i+1][:-1] + cycle[i]
+                        # print('y')
+                    else:
+                        empPos[i+1] = empPos[i+1]
+        # print(positions)
         finalList.update({emp: empPos})
         empPos=[]  
     return finalList
