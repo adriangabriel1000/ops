@@ -187,10 +187,11 @@ def expandedManplan(shift, dateList, cycle=None):
                 else:
                     # if empPos[i+1] == '':
                     #     print('empty')
-                    if empPos[i+1][:-1] in positions:
-                        empPos[i+1] = empPos[i+1][:-1] + cycle[i]
-                    else:
-                        empPos[i+1] = empPos[i+1]
+                    if cycle[i] != 'S' and  cycle[i] != 'T':
+                        if empPos[i+1][:-1] in positions:
+                            empPos[i+1] = empPos[i+1][:-1] + cycle[i]
+                        else:
+                            empPos[i+1] = empPos[i+1]
         finalList.update({emp: empPos})
         empPos=[]  
     return finalList
