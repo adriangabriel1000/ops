@@ -10,40 +10,25 @@ import random
 import math
 import calendar
 import random
-# import manfuncs
+from . import manfuncs
 
-# Create your views here.
 def index(request):
     dateList = []
     counter = {}
     cnt = 1
-    for x in range(-7,407):#range(-7,42):
+    for x in range(-7,407):
         dateList.append(datetime.today().date() + timedelta(x))
         daysmnth = calendar.monthrange((datetime.today().date() + timedelta(x)).year, (datetime.today().date() + timedelta(x)).month)[1]
         if (datetime.today().date() + timedelta(x)).day == daysmnth:
             counter.update({((datetime.today().date() + timedelta(x)).strftime('%B')): cnt})
             cnt = 0      
         cnt += 1
-    
-    # --------------- Update Positions
-    if request.method == 'POST':
-        if 'csrfmiddlewaretoken' not in str(request.body.decode("utf8")):
-            cellAddress = request.body.decode("utf8").split(",")
-            if cellAddress[2] != 'null':
-                empl = changePosition(cellAddress[0])
-                Schedule.objects.create(date=datetime.combine(dateList[int(cellAddress[1])-1], datetime.min.time()).replace(tzinfo=utc), position=cellAddress[2], employee=empl) 
-        
-        if request.POST.get("backward"):
-            print('Backward')
 
-        if request.POST.get("forward"):
-            print('Forward')
-
+    # --------------- Pagination
     paginator = Paginator(dateList, 49)
     page = request.GET.get('page')
     dateList = paginator.get_page(page)
     counter = counterList(dateList)
-    # print(dateList.object_list)
 
     # --------------- Calculate Shift Cycle
     aCycle = []
@@ -54,6 +39,7 @@ def index(request):
     fCycle = []
     ref = 0
 
+    # --------------- Calculate Paginated Shift Cycle
     for date in dateList:
         finalMNTH = date - datetime(2024,1,1,12,0,0).date() 
         ref = finalMNTH.days - (math.trunc(finalMNTH.days / 42) * 42) + 3
@@ -64,7 +50,19 @@ def index(request):
         eCycle.append((Cycle.objects.filter(id=ref).values('eShift')[0]['eShift']))
         fCycle.append((Cycle.objects.filter(id=ref).values('fShift')[0]['fShift']))
 
-    # aList = expandedManplan('A', dateList, aCycle)
+    # --------------- Update Positions
+    if request.method == 'POST':
+        if 'csrfmiddlewaretoken' not in str(request.body.decode("utf8")):
+            cellAddress = request.body.decode("utf8").split(",")
+            if cellAddress[2] != 'null':
+                empl = changePosition(cellAddress[0])
+                Schedule.objects.create(date=datetime.combine(dateList[int(cellAddress[1])-1], datetime.min.time()).replace(tzinfo=utc), position=cellAddress[2], employee=empl) 
+        
+        # if request.POST.get("backward"):
+        #     print('Backward')
+
+        # if request.POST.get("forward"):
+        #     print('Forward')
 
     return render(request, 'manplan/manplan.html', {
         'counter': counter,
@@ -133,17 +131,11 @@ def changePosition(cellRow):
         empl = oEmpl[int(cellRow) - f - 2]
     return empl
 
-
-
-
-
 def expandedManplan(shift, dateList, cycle=None):
-    # print(dateList)
-    # print(cycle)
-    # print(shift)
     empPos = []
     finalList = {}
     positions = ['OJ', 'CO', 'PN', 'SN', '0', 'T1', 'T2', 'N1', 'N2', 'A1', 'A2', 'S1', 'S2', '1', '2', 'SM', 'X']
+    
     for emp in Employee.objects.filter(shift=shift):
         shftEmp = {}
         getEmp = {}
@@ -156,7 +148,7 @@ def expandedManplan(shift, dateList, cycle=None):
                 if (dateList[0]) == empl.date.date():
                     tmpPos = empl.position
                 else:
-                    for t in range(0, -42, -1):
+                    for t in range(0, -407, -1):
                         if (dateList[0] + timedelta(t)) == empl.date.date():
                             tmpPos = empl.position                
                             break
@@ -167,14 +159,11 @@ def expandedManplan(shift, dateList, cycle=None):
             getEmp.update({tem.date.date(): tem.position})
 
         empPos.append(emp.ftm)    
-        # print(getEmp)
 
         for date in dateList:
-            # print(date)
             for empl in shftEmp:
                 if date == empl.date.date():
                     b=1
-                    # print(empl.date.date())
                     break
                 else:
                     b=0
@@ -186,29 +175,22 @@ def expandedManplan(shift, dateList, cycle=None):
         for date in dateList:
             if date in getEmp:
                 empPos.append(getEmp[date])
-                # print(getEmp[date])
                 if shift != 'O':
                     tmpPos = getEmp[date]
             else:
                 empPos.append(tmpPos)
 
-        # print(empPos)
-
         if cycle is not None:
             for i in range(0, 49):
-                # print(cycle[i])
-                # print(empPos[i+1])
                 if (cycle[i] == '' or empPos[i+1] == '' or cycle[i] == 'T' or cycle[i] == 'S') and actualPos[i] == '':
                     empPos[i+1] = ""
-                    # print(empPos[i+1])
                 else:
                     # if empPos[i+1] == '':
+                    #     print('empty')
                     if empPos[i+1][:-1] in positions:
                         empPos[i+1] = empPos[i+1][:-1] + cycle[i]
-                        # print('y')
                     else:
                         empPos[i+1] = empPos[i+1]
-        # print(positions)
         finalList.update({emp: empPos})
         empPos=[]  
     return finalList
