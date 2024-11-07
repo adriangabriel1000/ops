@@ -3,7 +3,7 @@
 {% block body %}
 
     <div style="">
-    <table class="table table-hover table-bordered rounded shadow-lg w-50 border border-white" id="manPlan">
+    <table class="table table-hover table-bordered rounded shadow-lg w-50 border border-light-subtle" id="manPlan">
         <thead style="position: sticky; top: 67px; z-index: 1;">
             <tr>
                 <th id="hname"></th>
@@ -102,7 +102,7 @@
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -114,7 +114,7 @@
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td> <!--onclick="colNum(this)"-->
+                        <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td> <!--onclick="colNum(this)"-->
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -129,7 +129,7 @@
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -141,7 +141,7 @@
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
+                        <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -156,7 +156,7 @@
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -168,7 +168,7 @@
                     {% if forloop.counter == 1 %}
                         <td id="FTM" style="text-align: center;">{{val}}</td>
                     {% else %}
-                        <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
+                        <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -183,7 +183,7 @@
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -195,7 +195,7 @@
                 {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
@@ -210,7 +210,7 @@
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -222,7 +222,7 @@
                 {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
@@ -237,7 +237,7 @@
                     {% if val %}
                         <th id="{{val}}">{{ val }}</th>
                     {% else %}
-                        <th style="background-color: #e9e9fa;" id="{{val}}">{{ val }}</th>
+                        <th style="background-color: white;" id="{{val}}">{{ val }}</th>
                     {% endif %}
                 {% endfor %}
             </tr>
@@ -249,7 +249,7 @@
                     {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>
@@ -261,7 +261,7 @@
                 <th id="heads">O-SHIFT</th>
                 <th id="heads"></th>
                 {% for i in cnt %}
-                    <th style="background-color: #e9e9fa;"> </th>
+                    <th style="background-color: white;"> </th>
                 {% endfor %}
             </tr>
             {% for key, value in oList.items %}
@@ -272,7 +272,7 @@
                 {% if forloop.counter == 1 %}
                     <td id="FTM" style="text-align: center;">{{val}}</td>
                 {% else %}
-                    <td id="{{val}}" style="background-color: #e9e9fa; text-align: center;">{{val}}</td>
+                    <td id="{{val}}" style="background-color: white; text-align: center;">{{val}}</td>
                 {% endif %}
                 {% endfor %}
             </tr>

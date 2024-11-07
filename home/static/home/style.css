@@ -55,23 +55,23 @@ th.uppercase {
     font-size: 10px;
     font-weight: bold;
     font-family: Verdana;
-    color: white;
-    background-color: #202428;
+    color: rgb(0, 0, 0);
+    background-color: #d6eaf8;
 }
 
 #hname {
     font-size: 10px;
     font-weight: bold;
     font-family: Verdana;
-    color: white;
-    background-color: #212529;
+    color: rgb(0, 0, 0);
+    background-color: #d6eaf8;
 }
 
 #heads {
     font-size: 10px;
     font-weight: bold;
     font-family: Verdana;
-    color: white;
-    background-color: #202428;
+    color: rgb(0, 0, 0);
+    background-color: #d6eaf8;
 }
 
